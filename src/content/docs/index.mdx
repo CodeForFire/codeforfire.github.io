@@ -1,0 +1,87 @@
+---
+title: Einsatzdokumentation für den ELW
+description: Das digitale Einsatztagebuch für den Einsatzleitwagen — offline, ohne Cloud, ohne Abo. Ein Einsatz ist eine Datei, die euch gehört.
+template: splash
+hero:
+  tagline: Offline. Robust. Open Source.
+  image:
+    alt: Lagebuch
+    file: ../../assets/lagebuch-logo.png
+  actions:
+    - text: Herunterladen
+      link: /download/
+      icon: right-arrow
+    - text: Probefahrt in 5 Minuten
+      link: /probefahrt/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components'
+
+Lagebuch ist das digitale Einsatztagebuch für den Einsatzleitwagen: eine
+Desktop-Anwendung, die auch ohne Netz, ohne Cloud und ohne Abo funktioniert.
+Ein Einsatz ist eine Datei auf dem ELW-Laptop – mit Einsatztagebuch, Kräften,
+Atemschutzüberwachung, Aufgaben, CO-Messprotokoll und PDF-Bericht.
+
+<img
+  src="/bilder/einsatz-flow.gif"
+  alt="Ein Einsatz in Lagebuch: Einsatzdaten, ETB, Kräfte, Atemschutz, Aufgaben, CO-Messung, PDF"
+  style="width: 100%; border-radius: 0.5rem; margin: 2rem 0;"
+/>
+
+## Warum Lagebuch?
+
+<CardGrid>
+  <Card title="Läuft offline – wirklich" icon="laptop">
+    Kein Internet, kein Konto, kein Server. Jeder Einsatz ist eine einzelne
+    `.fwincident`-Datei, die dir gehört und die du archivieren, kopieren oder
+    weitergeben kannst.
+  </Card>
+  <Card title="Keine Daten verlassen den ELW" icon="approve-check">
+    Stammdaten, Namen und Handynummern liegen nur auf deinem Gerät. Die
+    optionale Mehrgeräte-Verbindung läuft im LAN oder über Tailscale,
+    TLS-gesichert mit PIN – ohne Cloud, ohne Telemetrie.
+    [Was genau wo gespeichert wird](/datenschutz/)
+  </Card>
+  <Card title="Open Source, MIT-Lizenz" icon="open-book">
+    Kein Abo, keine Sitzplatzlizenzen, kein Vendor-Lock-in. Der Quellcode ist
+    einsehbar, Änderungswünsche sind ein Issue entfernt.
+  </Card>
+</CardGrid>
+
+## Für wen ist Lagebuch?
+
+- **ELW-Besatzung und Führungsassistenten**, die im Einsatz mitschreiben,
+  Kräfte führen und die ILS auf dem Laufenden halten – mit der Tastatur, ohne
+  Maus-Akrobatik.
+- **Atemschutzüberwachung**, die verlässliche Zeiten, Druckabfragen und einen
+  Rückzugsalarm braucht, den man auch im lauten ELW hört.
+- **Kleine und mittlere Wehren**, die keine Lizenzgebühren, keine Server und
+  keine IT-Abteilung haben – aber trotzdem sauber dokumentieren wollen.
+
+## Was Lagebuch kann
+
+| Modul | Was es tut |
+|---|---|
+| **Einsatzdaten** | Stichwort, bayerische Einsatznummer (`B 1.2 JJMMTT lfd.Nr.`) und Adresse – nachtragbar, sobald die ILS zurückruft |
+| **ETB** | Einsatztagebuch mit Richtung (Eingang/Ausgang/intern), automatischen Systemeinträgen und nachträglicher Korrektur mit Historie |
+| **Kräfte** | Fahrzeuge aus den Stammdaten, Stärke als ZF/GF/Mann, AGT-Zahl, Status und Bemerkung; Gesamtstärke immer im Blick |
+| **Aufgaben** | Aufträge mit Wichtigkeit, Dringlichkeit, Zuständigem und Timer – mit Sprachansage, wenn sie fällig werden |
+| **Funktionen** | EL, Abschnittsleiter und weitere Rollen mit von/bis, Übergabe und Handynummer |
+| **Atemschutzüberwachung** | Trupps mit Einstiegsdruck, Einsatzzeit-Countdown, Druckabfrage-Intervall, Rückzugsdruck und Rückzugsalarm – mit Sprachansage und Sirene |
+| **Rückmeldung an ILS** | Erinnerung nach konfigurierbarer Zeit, danach im Intervall, mit ERLEDIGT-Quittierung; überlebt Neustart und Absturz |
+| **CO-Messprotokoll** | Haus, Stockwerk, Wohnung: Status, ppm-Wert mit Gefahrenfarbe, Bewohnername, Schlüssel vorhanden – wie die Türmarkierung vor Ort |
+| **Checklisten** | Aufbau- und Abbau-Checklisten aus den eigenen Stammdaten, Pflichtpunkte markiert, Abschluss im ETB protokolliert |
+| **Dateien & Links** | Fotos und PDFs an den Einsatz hängen (landen im Bericht); Schnellzugriff auf Wetter, Karten, Hydrantenplan |
+| **PDF-Bericht** | Ein Klick, Abschnitte wählbar, Anhänge eingebettet – fertig für Akte und Kreisbrandinspektion |
+| **Mehrere Geräte** | Einsatz auf dem ELW-Laptop hosten, mit Tablet oder zweitem Laptop im LAN/Tailscale mitschreiben; Android-App als Begleitgerät |
+
+## Mitmachen
+
+Lagebuch wird von [CodeForFire](https://github.com/CodeForFire) entwickelt –
+Feuerwehrleuten aus Bayern, die im Einsatz selbst damit arbeiten.
+
+Feedback aus der Praxis ist das Wertvollste: was fehlt im ELW, was nervt, was
+macht Papier heute noch besser? Fragen und Ideen gehören ins
+[Forum](https://github.com/CodeForFire/lagebuch/discussions), Fehler in ein
+[Issue](https://github.com/CodeForFire/lagebuch/issues/new/choose).

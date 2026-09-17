@@ -1,0 +1,32 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Content synced from CodeForFire/lagebuch by scripts/sync-docs.mjs.
+# docs/ over there is the single source of truth; nothing here is hand-edited.
+src/content/docs/datenschutz.md
+src/assets/lagebuch-logo.png
+public/bilder/
+
+# CI checkout of the lagebuch repo
+.lagebuch/
+
+# Environment
+.env
+.env.production
+
+# Editors / OS
+.DS_Store
+*.swp
+
+# Local AI agent state
+.claude/
+.opencode/
+
+# Local tooling artifacts — never committed
+docs/superpowers/
+.superpowers/
+.worktrees/

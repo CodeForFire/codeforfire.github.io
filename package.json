@@ -1,0 +1,23 @@
+{
+  "name": "codeforfire-website",
+  "version": "0.0.0",
+  "scripts": {
+    "sync": "node scripts/sync-docs.mjs",
+    "dev": "npm run sync && astro dev",
+    "build": "npm run sync && astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "license": "MIT",
+  "description": "Website für Lagebuch — die Einsatzdokumentation von CodeForFire",
+  "dependencies": {
+    "@astrojs/starlight": "^0.42.1",
+    "astro": "^7.3.3",
+    "sharp": "^0.35.4"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

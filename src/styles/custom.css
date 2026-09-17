@@ -1,0 +1,29 @@
+/* Lagebuch — Feuerwehr-Rot als Akzent, abgeleitet aus dem Logo.
+   Starlight erwartet je neun Abstufungen für Accent und Gray. */
+:root {
+  --sl-color-accent-low: #3b0a08;
+  --sl-color-accent: #c0261d;
+  --sl-color-accent-high: #f3b3ae;
+
+  /* Etwas mehr Zeilenlänge: die Seiten sind Fließtext, keine API-Referenz. */
+  --sl-content-width: 50rem;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #f7cfcb;
+  --sl-color-accent: #b3231a;
+  --sl-color-accent-high: #4a0f0c;
+}
+
+/* Die Vergleichstabelle hat sechs Spalten mit Fließtext — auf dem Handy
+   scrollt sie horizontal statt die Seite zu sprengen. */
+.sl-markdown-content table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Screenshots und das Demo-GIF sollen nicht wie Icons wirken. */
+.sl-markdown-content img {
+  border-radius: 0.5rem;
+}
