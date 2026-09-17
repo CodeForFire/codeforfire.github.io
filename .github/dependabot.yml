@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Keep the SHA-pinned GitHub Actions current.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+
+  # Astro and Starlight must move in lockstep, so they arrive as one pull
+  # request rather than two that each break the build on their own.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
