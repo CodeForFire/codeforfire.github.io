@@ -1,0 +1,823 @@
+---
+// The guided tour of the app, one screenshot per view. Rendered as a complete
+// static gallery first — every view, every hotspot note, anchor links between
+// them — so it reads without JavaScript and Pagefind indexes all of it. The
+// script below then turns it into one stage with a timeline, a spotlight on
+// the active hotspot, keyboard control and an autoplaying tour.
+import { Image, Picture } from 'astro:assets'
+import { ANSICHTEN, PHASEN, bild, type Phase } from '../data/rundgang'
+
+const views = ANSICHTEN.map((a, i) => ({ ...a, index: i, nr: i + 1, meta: bild(a.id) }))
+const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
+  phase,
+  label: PHASEN[phase],
+  views: views.filter((v) => v.phase === phase),
+}))
+---
+
+<div class="rg not-content" data-rundgang>
+  <nav class="rg-timeline" aria-label="Ansichten des Rundgangs">
+    {
+      phases.map((p) => (
+        <div class="rg-phase" style={`--count: ${p.views.length}`}>
+          <p class="rg-phase-name">{p.label}</p>
+          <ol>
+            {p.views.map((v) => (
+              <li>
+                <a href={`#${v.id}`} data-view={v.index}>
+                  <Image src={v.meta} widths={[200, 400]} sizes="8rem" alt="" loading="lazy" />
+                  <span>
+                    <span class="rg-thumb-nr">{v.nr}</span> {v.kurz}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))
+    }
+  </nav>
+
+  <div class="rg-controls" hidden>
+    <button type="button" class="rg-btn" data-action="prev" aria-label="Vorherige Ansicht">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </button>
+    <p class="rg-counter" aria-hidden="true"><span data-counter>1</span> von {views.length}</p>
+    <button type="button" class="rg-btn" data-action="next" aria-label="Nächste Ansicht">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    <button type="button" class="rg-btn rg-play" data-action="play" aria-pressed="false">
+      <svg class="rg-icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+      <svg class="rg-icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"></path></svg>
+      <span data-play-label>Rundgang abspielen</span>
+    </button>
+    <button type="button" class="rg-btn" data-action="fullscreen" aria-label="Vollbild" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+    </button>
+    <p class="rg-keys">
+      <span><kbd>←</kbd> <kbd>→</kbd> Ansicht</span>
+      <span><kbd>1</kbd>–<kbd>9</kbd> Punkt</span>
+      <span><kbd>F</kbd> Vollbild</span>
+    </p>
+  </div>
+
+  <p class="rg-live" aria-live="polite" data-live></p>
+
+  {
+    views.map((v) => (
+      <article class="rg-view" id={v.id} data-index={v.index} aria-labelledby={`${v.id}-titel`}>
+        <h2 id={`${v.id}-titel`}>
+          <span class="rg-nr">{v.nr}</span> {v.titel}
+        </h2>
+
+        <div class="rg-stage">
+          <Picture
+            src={v.meta}
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            widths={[640, 960, 1440, 1920]}
+            sizes="(min-width: 76rem) 72rem, 100vw"
+            alt={v.alt}
+            loading={v.index === 0 ? 'eager' : 'lazy'}
+          />
+          <div class="rg-spot" aria-hidden="true" />
+          {v.hotspots.map((h, i) => (
+            <a
+              class="rg-marker"
+              href={`#${v.id}-${i + 1}`}
+              style={`--x: ${h.x}%; --y: ${h.y}%`}
+              data-spot={i + 1}
+              aria-label={`${i + 1}: ${h.titel}`}
+            >
+              {i + 1}
+            </a>
+          ))}
+          <div class="rg-callout" aria-hidden="true" hidden>
+            <p class="rg-callout-titel" />
+            <p class="rg-callout-text" />
+          </div>
+          <div class="rg-progress" aria-hidden="true" />
+        </div>
+
+        <div class="rg-body">
+          <p class="rg-intro">{v.text}</p>
+          <ol class="rg-notes">
+            {v.hotspots.map((h, i) => (
+              <li id={`${v.id}-${i + 1}`}>
+                <a href={`#${v.id}-${i + 1}`} data-spot={i + 1} data-titel={h.titel} data-text={h.text}>
+                  <span class="rg-note-nr" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <span>
+                    <strong>{h.titel}</strong> {h.text}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<style is:global>
+  /* Registered so the spotlight glides from one hotspot to the next instead of jumping. */
+  @property --sx {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 50%;
+  }
+  @property --sy {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 50%;
+  }
+</style>
+
+<style>
+  .rg {
+    --rg-marker: 2rem;
+    --rg-red: var(--sl-color-accent);
+    --rg-line: var(--sl-color-gray-5);
+    --rg-step: 4.5s;
+    max-width: 72rem;
+    margin-inline: auto;
+    scroll-margin-top: calc(var(--sl-nav-height, 4rem) + 1rem);
+    color: var(--sl-color-text);
+  }
+
+  /* --- Timeline: the Einsatz as a time axis, thumbnails as stations --- */
+  .rg-timeline {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-block: 0.25rem 1rem;
+    scrollbar-width: thin;
+  }
+  .rg-phase {
+    flex: var(--count) 1 0;
+    min-width: max(calc(var(--count) * 6rem), 8.5rem);
+  }
+  .rg-phase-name {
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--rg-line);
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    font-weight: 600;
+  }
+  .rg-phase ol {
+    display: grid;
+    grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rg-phase a {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-xs);
+    line-height: 1.3;
+    text-decoration: none;
+    hyphens: auto;
+  }
+  .rg-phase img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1920 / 1032;
+    border: 2px solid transparent;
+    border-radius: 0.3rem;
+    outline: 1px solid var(--rg-line);
+    transition: border-color 0.15s;
+  }
+  .rg-phase a:hover img {
+    border-color: var(--sl-color-gray-3);
+  }
+  .rg-phase a[aria-current] {
+    color: var(--sl-color-white);
+    font-weight: 600;
+  }
+  .rg-phase a[aria-current] img {
+    border-color: var(--rg-red);
+    outline-color: var(--rg-red);
+  }
+  .rg-thumb-nr {
+    color: var(--rg-red);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- Controls --- */
+  .rg-controls:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-block: 0.5rem 1rem;
+  }
+  .rg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    justify-content: center;
+    padding: 0 0.75rem;
+    border: 1px solid var(--rg-line);
+    border-radius: 0.4rem;
+    background: var(--sl-color-bg-nav);
+    color: var(--sl-color-white);
+    font: inherit;
+    font-size: var(--sl-text-sm);
+    cursor: pointer;
+  }
+  .rg-btn:hover {
+    border-color: var(--sl-color-gray-3);
+  }
+  .rg-btn svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .rg-play {
+    background: var(--rg-red);
+    border-color: var(--rg-red);
+    color: #fff;
+    font-weight: 600;
+  }
+  .rg-play:hover {
+    border-color: var(--sl-color-accent-high);
+  }
+  .rg-play svg {
+    fill: currentColor;
+    stroke: none;
+  }
+  .rg-icon-pause,
+  .rg-play[aria-pressed='true'] .rg-icon-play {
+    display: none;
+  }
+  .rg-play[aria-pressed='true'] .rg-icon-pause {
+    display: block;
+  }
+  .rg-counter {
+    margin: 0;
+    min-width: 4.5rem;
+    text-align: center;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+  .rg-keys {
+    display: flex;
+    gap: 1rem;
+    margin: 0 0 0 auto;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+  }
+  .rg-keys kbd {
+    padding: 0.05rem 0.35rem;
+    border: 1px solid var(--rg-line);
+    border-radius: 0.25rem;
+    font-family: inherit;
+  }
+  @media (hover: none), (max-width: 50rem) {
+    .rg-keys {
+      display: none;
+    }
+  }
+  .rg-live {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* --- A view --- */
+  .rg-view {
+    margin-block: 2.5rem;
+    scroll-margin-top: calc(var(--sl-nav-height, 4rem) + 1rem);
+  }
+  .rg.is-enhanced .rg-view {
+    margin-block: 0;
+  }
+  .rg.is-enhanced .rg-view:not([data-active]) {
+    display: none;
+  }
+  .rg-view h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0 0 0.75rem;
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-2xl);
+    line-height: 1.2;
+  }
+  .rg-nr {
+    color: var(--rg-red);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* --- Stage: screenshot, spotlight, markers, callout --- */
+  .rg-stage {
+    position: relative;
+    container-type: inline-size;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 0 0 1px var(--rg-line);
+    touch-action: pan-y;
+  }
+  .rg-stage :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .rg-spot {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--sx) var(--sy),
+      transparent 0 6cqi,
+      rgb(0 0 0 / 0.66) 13cqi
+    );
+    opacity: 0;
+    transition:
+      opacity 0.3s,
+      --sx 0.45s cubic-bezier(0.3, 0.7, 0.2, 1),
+      --sy 0.45s cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+  .rg-spot.is-on {
+    opacity: 1;
+  }
+  .rg-marker {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    display: grid;
+    place-items: center;
+    width: var(--rg-marker);
+    height: var(--rg-marker);
+    translate: -50% -50%;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: var(--rg-red);
+    color: #fff;
+    font-size: calc(var(--rg-marker) * 0.48);
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.5);
+    transition: scale 0.15s;
+  }
+  .rg-marker:hover,
+  .rg-marker.is-active {
+    scale: 1.18;
+  }
+  .rg-marker.is-active::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 2px solid var(--rg-red);
+    animation: rg-ring 1.6s ease-out infinite;
+  }
+  @keyframes rg-ring {
+    to {
+      inset: -0.9rem;
+      opacity: 0;
+    }
+  }
+  .rg-marker:focus-visible,
+  .rg-btn:focus-visible,
+  .rg-notes a:focus-visible,
+  .rg-phase a:focus-visible {
+    outline: 3px solid var(--sl-color-accent-high);
+    outline-offset: 2px;
+  }
+
+  .rg-callout {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    z-index: 1;
+    width: min(20rem, 40cqi);
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid var(--rg-red);
+    border-radius: 0.35rem;
+    background: rgb(12 15 20 / 0.94);
+    color: #e8ecf1;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.5);
+    pointer-events: none;
+    translate: 1.6rem -50%;
+  }
+  .rg-callout[data-side='left'] {
+    translate: calc(-100% - 1.6rem) -50%;
+  }
+  /* Near the top or bottom edge the callout goes below or above the marker, never over its row. */
+  .rg-callout[data-edge='top'] {
+    translate: -1.25rem 1.6rem;
+  }
+  .rg-callout[data-side='left'][data-edge='top'] {
+    translate: calc(-100% + 1.25rem) 1.6rem;
+  }
+  .rg-callout[data-edge='bottom'] {
+    translate: -1.25rem calc(-100% - 1.6rem);
+  }
+  .rg-callout[data-side='left'][data-edge='bottom'] {
+    translate: calc(-100% + 1.25rem) calc(-100% - 1.6rem);
+  }
+  .rg-callout p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+  .rg-callout-titel {
+    font-weight: 700;
+    color: #fff;
+  }
+  @container (max-width: 40rem) {
+    .rg-callout {
+      display: none;
+    }
+    .rg-marker {
+      --rg-marker: 1.35rem;
+      border-width: 1.5px;
+    }
+  }
+
+  .rg-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    background: var(--rg-red);
+  }
+  .rg-progress.is-running {
+    animation: rg-progress var(--rg-step) linear forwards;
+  }
+  @keyframes rg-progress {
+    to {
+      width: 100%;
+    }
+  }
+
+  /* --- Explanation beneath the stage --- */
+  .rg-body {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 1rem 2.5rem;
+    margin-top: 1.25rem;
+  }
+  @media (max-width: 50rem) {
+    .rg-body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  .rg-intro {
+    margin: 0;
+    font-size: var(--sl-text-lg);
+    line-height: 1.55;
+    max-width: 34em;
+  }
+  .rg-notes {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .rg-notes a {
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    gap: 0.6rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.35rem;
+    color: var(--sl-color-gray-2);
+    line-height: 1.5;
+    text-decoration: none;
+    transition: background-color 0.15s;
+  }
+  .rg-notes strong {
+    color: var(--sl-color-white);
+  }
+  .rg-note-nr {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--rg-red);
+    color: var(--rg-red);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .rg-notes a:hover,
+  .rg-notes li:target a,
+  .rg-notes a.is-active {
+    background: var(--sl-color-gray-6);
+  }
+  .rg-notes a.is-active .rg-note-nr,
+  .rg-notes li:target .rg-note-nr {
+    background: var(--rg-red);
+    color: #fff;
+  }
+
+  /* --- Fullscreen: stage fills the screen, notes beside it --- */
+  .rg-view:fullscreen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 22rem;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 1rem 1.5rem;
+    padding: 1.5rem;
+    background: var(--sl-color-bg);
+    overflow: auto;
+  }
+  .rg-view:fullscreen h2 {
+    grid-column: 1 / -1;
+  }
+  .rg-view:fullscreen .rg-stage {
+    align-self: center;
+  }
+  .rg-view:fullscreen .rg-body {
+    display: block;
+    margin: 0;
+  }
+  .rg-view:fullscreen .rg-intro {
+    margin-bottom: 1rem;
+    font-size: var(--sl-text-base);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rg-spot,
+    .rg-marker,
+    .rg-notes a,
+    .rg-phase img {
+      transition: none;
+    }
+    .rg-marker.is-active::after {
+      animation: none;
+    }
+    .rg-progress.is-running {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  type Step = { view: number; spot: number }
+
+  function init(root: HTMLElement) {
+    const views = [...root.querySelectorAll<HTMLElement>('.rg-view')]
+    const thumbs = [...root.querySelectorAll<HTMLAnchorElement>('.rg-timeline a')]
+    const controls = root.querySelector<HTMLElement>('.rg-controls')!
+    const counter = root.querySelector<HTMLElement>('[data-counter]')!
+    const live = root.querySelector<HTMLElement>('[data-live]')!
+    const playBtn = root.querySelector<HTMLButtonElement>('[data-action="play"]')!
+    const playLabel = root.querySelector<HTMLElement>('[data-play-label]')!
+    const fsBtn = root.querySelector<HTMLButtonElement>('[data-action="fullscreen"]')!
+    const ids = views.map((v) => v.id)
+
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches
+    const STEP_MS = 4500
+
+    let current = 0
+    let selected = 0 // the spot the reader chose; hover only previews
+    let playing = false
+    let timer: number | undefined
+    let visible = false
+
+    root.classList.add('is-enhanced')
+    controls.hidden = false
+    if (document.fullscreenEnabled) fsBtn.hidden = false
+
+    const markersOf = (v: number) => [...views[v].querySelectorAll<HTMLElement>('.rg-marker')]
+    const notesOf = (v: number) => [...views[v].querySelectorAll<HTMLElement>('.rg-notes a')]
+    const spotCount = (v: number) => markersOf(v).length
+
+    function paintSpot(spot: number) {
+      const view = views[current]
+      const markers = markersOf(current)
+      notesOf(current).forEach((n, i) => n.classList.toggle('is-active', i + 1 === spot))
+      markers.forEach((m, i) => m.classList.toggle('is-active', i + 1 === spot))
+
+      const shade = view.querySelector<HTMLElement>('.rg-spot')!
+      const callout = view.querySelector<HTMLElement>('.rg-callout')!
+      const marker = markers[spot - 1]
+      if (!marker) {
+        shade.classList.remove('is-on')
+        callout.hidden = true
+        return
+      }
+      const x = marker.style.getPropertyValue('--x')
+      const y = marker.style.getPropertyValue('--y')
+      shade.style.setProperty('--sx', x)
+      shade.style.setProperty('--sy', y)
+      shade.classList.add('is-on')
+
+      const note = notesOf(current)[spot - 1]
+      callout.querySelector('.rg-callout-titel')!.textContent = note.dataset.titel!
+      callout.querySelector('.rg-callout-text')!.textContent = note.dataset.text!
+      callout.style.setProperty('--x', x)
+      callout.style.setProperty('--y', y)
+      const px = parseFloat(x)
+      const py = parseFloat(y)
+      callout.dataset.side = px > 58 ? 'left' : 'right'
+      callout.dataset.edge = py < 30 ? 'top' : py > 70 ? 'bottom' : ''
+      callout.hidden = false
+    }
+
+    function show(view: number, spot = 0, { hash = true, announce = true } = {}) {
+      view = (view + views.length) % views.length
+      if (view !== current) paintSpot(0)
+      current = view
+      selected = spot
+      views.forEach((v, i) => v.toggleAttribute('data-active', i === view))
+      thumbs.forEach((t, i) => {
+        if (i === view) {
+          t.setAttribute('aria-current', 'step')
+          t.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' })
+        } else t.removeAttribute('aria-current')
+      })
+      counter.textContent = String(view + 1)
+      paintSpot(spot)
+
+      if (hash) history.replaceState(null, '', `#${ids[view]}${spot ? `-${spot}` : ''}`)
+      if (announce) {
+        const title = views[view].querySelector('h2')!.textContent!.replace(/\s+/g, ' ').trim()
+        const note = spot ? notesOf(view)[spot - 1].dataset.titel : ''
+        live.textContent = `Ansicht ${title}${note ? `, Punkt ${spot}: ${note}` : ''}`
+      }
+    }
+
+    function parse(hash: string): Step | null {
+      const m = /^#(.+?)(?:-(\d+))?$/.exec(decodeURIComponent(hash))
+      if (!m) return null
+      const view = ids.indexOf(m[1])
+      if (view < 0) return null
+      const spot = Math.min(Number(m[2] ?? 0), spotCount(view))
+      return { view, spot }
+    }
+
+    // --- Autoplay: every hotspot of every view, from where the reader is ---
+    function steps(): Step[] {
+      return views.flatMap((_, v) => Array.from({ length: spotCount(v) }, (_, i) => ({ view: v, spot: i + 1 })))
+    }
+
+    function restartProgress() {
+      const bar = views[current].querySelector<HTMLElement>('.rg-progress')!
+      root.querySelectorAll('.rg-progress').forEach((b) => b.classList.remove('is-running'))
+      void bar.offsetWidth // restart the CSS animation
+      bar.classList.add('is-running')
+    }
+
+    function tick() {
+      const all = steps()
+      const at = all.findIndex((s) => s.view === current && s.spot === selected)
+      const next = all[at + 1]
+      if (!next) {
+        stop()
+        return
+      }
+      show(next.view, next.spot)
+      restartProgress()
+      timer = window.setTimeout(tick, STEP_MS)
+    }
+
+    function play() {
+      if (playing) return
+      playing = true
+      playBtn.setAttribute('aria-pressed', 'true')
+      playLabel.textContent = 'Anhalten'
+      const all = steps()
+      const last = all[all.length - 1]
+      if (current === last.view && selected === last.spot) show(0, 0)
+      tick()
+    }
+
+    function stop() {
+      if (!playing) return
+      playing = false
+      window.clearTimeout(timer)
+      root.querySelectorAll('.rg-progress').forEach((b) => b.classList.remove('is-running'))
+      playBtn.setAttribute('aria-pressed', 'false')
+      playLabel.textContent = 'Rundgang abspielen'
+    }
+
+    // --- Pointer ---
+    root.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement
+      const link = target.closest<HTMLAnchorElement>('a[href^="#"]')
+      if (link) {
+        const step = parse(link.getAttribute('href')!)
+        if (!step) return
+        e.preventDefault()
+        stop()
+        // Clicking the active spot again clears it.
+        const again = step.view === current && step.spot === selected && step.spot > 0
+        show(step.view, again ? 0 : step.spot)
+        return
+      }
+      const action = target.closest<HTMLElement>('[data-action]')?.dataset.action
+      if (action === 'prev') (stop(), show(current - 1))
+      if (action === 'next') (stop(), show(current + 1))
+      if (action === 'play') (playing ? stop() : play())
+      if (action === 'fullscreen') toggleFullscreen()
+    })
+
+    // Hover and focus preview a hotspot from either side, without committing to it.
+    const preview = (e: Event) => {
+      const el = (e.target as HTMLElement).closest<HTMLElement>('[data-spot]')
+      if (el && views[current].contains(el)) paintSpot(Number(el.dataset.spot))
+    }
+    const unpreview = (e: Event) => {
+      if ((e.target as HTMLElement).closest('[data-spot]')) paintSpot(selected)
+    }
+    root.addEventListener('pointerover', preview)
+    root.addEventListener('pointerout', unpreview)
+    root.addEventListener('focusin', preview)
+    root.addEventListener('focusout', unpreview)
+
+    // Swipe on the stage.
+    let startX = 0
+    let startY = 0
+    root.addEventListener(
+      'touchstart',
+      (e) => {
+        if (!(e.target as HTMLElement).closest('.rg-stage')) return
+        startX = e.touches[0].clientX
+        startY = e.touches[0].clientY
+      },
+      { passive: true },
+    )
+    root.addEventListener('touchend', (e) => {
+      if (!(e.target as HTMLElement).closest('.rg-stage')) return
+      const dx = e.changedTouches[0].clientX - startX
+      const dy = e.changedTouches[0].clientY - startY
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        stop()
+        show(current + (dx < 0 ? 1 : -1))
+      }
+    })
+
+    // --- Keyboard: only while the tour is on screen, and never inside a form or dialog ---
+    new IntersectionObserver(([entry]) => (visible = entry.isIntersecting), { threshold: 0.25 }).observe(root)
+
+    function toggleFullscreen() {
+      if (document.fullscreenElement) document.exitFullscreen()
+      else views[current].requestFullscreen().catch(() => {})
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return
+      const t = e.target as HTMLElement
+      if (t.closest('input, textarea, select, [contenteditable], dialog')) return
+      const inFullscreen = document.fullscreenElement && root.contains(document.fullscreenElement)
+      if (!visible && !inFullscreen) return
+      const focusInside = root.contains(document.activeElement)
+
+      let handled = true
+      if (e.key === 'ArrowRight') (stop(), show(current + 1))
+      else if (e.key === 'ArrowLeft') (stop(), show(current - 1))
+      else if (/^[1-9]$/.test(e.key) && Number(e.key) <= spotCount(current)) (stop(), show(current, Number(e.key)))
+      else if (e.key === '0') (stop(), show(current, 0))
+      else if ((e.key === 'f' || e.key === 'F') && document.fullscreenEnabled) toggleFullscreen()
+      else if (e.key === ' ' && (focusInside || inFullscreen) && !t.closest('a, button')) playing ? stop() : play()
+      else handled = false
+      if (handled) e.preventDefault()
+    })
+
+    document.addEventListener('fullscreenchange', () => {
+      fsBtn.setAttribute('aria-label', document.fullscreenElement ? 'Vollbild beenden' : 'Vollbild')
+    })
+    document.addEventListener('visibilitychange', () => document.hidden && stop())
+    window.addEventListener('hashchange', () => {
+      const step = parse(location.hash)
+      if (step) (stop(), show(step.view, step.spot, { hash: false }))
+    })
+
+    // --- Start where the link points, if it points into the tour ---
+    const initial = parse(location.hash)
+    if (initial) {
+      show(initial.view, initial.spot, { hash: false, announce: false })
+      // After the browser's own jump to the matching note, bring the stage into view instead.
+      const toStage = () => views[initial.view].scrollIntoView({ block: 'start' })
+      if (document.readyState === 'complete') toStage()
+      else window.addEventListener('load', () => requestAnimationFrame(toStage), { once: true })
+    } else {
+      show(0, 0, { hash: false, announce: false })
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-rundgang]').forEach(init)
+</script>

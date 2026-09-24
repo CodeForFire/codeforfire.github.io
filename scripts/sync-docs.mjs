@@ -117,9 +117,14 @@ async function syncImages(lagebuch) {
     throw new Error(`Missing in the lagebuch checkout: ${shotsDir}\n  (needed for the screenshots)`)
   }
   if (shots.length === 0) throw new Error(`No screenshots found in ${shotsDir}`)
+  // Into src/assets, not public/: the Rundgang page renders them through
+  // astro:assets, which needs them as imports to emit WebP and srcsets.
+  const screenshots = join(siteRoot, 'src', 'assets', 'screenshots')
+  await rm(screenshots, { recursive: true, force: true })
+  await mkdir(screenshots, { recursive: true })
   for (const shot of shots) {
-    await cp(join(shotsDir, shot), join(bilder, shot))
-    written.push(join(bilder, shot))
+    await cp(join(shotsDir, shot), join(screenshots, shot))
+    written.push(join(screenshots, shot))
   }
 
   await cp(logoSource, join(bilder, 'favicon.png'))

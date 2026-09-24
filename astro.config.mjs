@@ -39,6 +39,7 @@ export default defineConfig({
           items: [
             { label: 'Start', slug: '' },
             { label: 'Probefahrt in 5 Minuten', slug: 'probefahrt' },
+            { label: 'Rundgang durch einen Einsatz', slug: 'rundgang' },
             { label: 'Herunterladen und installieren', slug: 'download' },
             { label: 'Lagebuch im Vergleich', slug: 'vergleich' },
             { label: 'Datenschutz und Sicherheit', slug: 'datenschutz' },

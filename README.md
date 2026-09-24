@@ -19,7 +19,13 @@ the app repository and copied in at build time by `scripts/sync-docs.mjs`:
 | `datenschutz` | `docs/datenschutz-und-sicherheit.md` |
 | logo, favicon, og:image | `docs/logo/` |
 | demo animation | `docs/demo/einsatz-flow.gif` |
-| screenshots | `docs/screenshots/` |
+| screenshots on `rundgang` | `docs/screenshots/` |
+
+The hotspot positions on `rundgang` (`src/data/rundgang.ts`) are percentages
+of the 1920×1032 frame `make screenshots` renders. The build fails if a
+screenshot is missing or changes size, and warns about a new screenshot that is
+not part of the tour yet. After a visual change in the app, re-check the
+positions with `npm run dev`.
 
 Everything the script writes is gitignored — never edit those files here, edit
 them in the app repository. The script fails the build if a source file has
