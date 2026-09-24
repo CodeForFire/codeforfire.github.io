@@ -32,16 +32,18 @@ paar Namen, Checklisten und Links.
 [`uebung.fwincident` herunterladen](https://github.com/CodeForFire/lagebuch/raw/main/docs/samples/uebung.fwincident)
 
 In Lagebuch **ÖFFNEN** wählen. Der Einsatz „B 3 – Zimmerbrand“ hat schon
-ETB-Einträge, vier Fahrzeuge, zwei Atemschutztrupps, Aufgaben und ein
-CO-Messprotokoll. Über **WEITER BEARBEITEN** könnt ihr selbst eingreifen.
+ETB-Einträge, vier Fahrzeuge, einen Angriffstrupp unter Atemschutz mit
+zugeordnetem Sicherheitstrupp, Aufgaben und ein CO-Messprotokoll, in dem eine
+Wohnung schon dreimal gemessen wurde. Über **WEITER BEARBEITEN** könnt ihr selbst eingreifen.
 
 ## 4. Ausprobieren
 
 - Einen ETB-Eintrag schreiben.
-- Im Tab **ATEMSCHUTZ** einen Trupp bereitstellen und starten – und warten,
-  bis die Druckabfrage sich meldet.
+- Im Tab **ATEMSCHUTZ** einen Trupp bereitstellen, einen Sicherheitstrupp
+  zuordnen und starten – und warten, bis die Druckabfrage sich meldet.
 - Eine Aufgabe mit Timer anlegen.
-- In der **CO-MESSUNG** eine Wohnung markieren.
+- In der **CO-MESSUNG** eine Wohnung markieren oder einen weiteren Messwert
+  eintragen – der Verlauf landet im ETB.
 
 ## 5. PDF exportieren
 
