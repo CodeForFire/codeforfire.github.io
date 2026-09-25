@@ -524,13 +524,15 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
     font-size: 0.8rem;
     font-weight: 700;
   }
+  /* :target is the no-JS highlight. Once the script runs, .is-active alone decides —
+     history.replaceState moves the hash but never :target, which would stay behind. */
   .rg-notes a:hover,
-  .rg-notes li:target a,
+  .rg:not(.is-enhanced) .rg-notes li:target a,
   .rg-notes a.is-active {
     background: var(--sl-color-gray-6);
   }
   .rg-notes a.is-active .rg-note-nr,
-  .rg-notes li:target .rg-note-nr {
+  .rg:not(.is-enhanced) .rg-notes li:target .rg-note-nr {
     background: var(--rg-red);
     color: #fff;
   }
