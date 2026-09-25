@@ -533,27 +533,44 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
     color: #fff;
   }
 
-  /* --- Fullscreen: stage fills the screen, notes beside it --- */
-  .rg-view:fullscreen {
+  /* --- Fullscreen: the whole tour goes fullscreen, so changing the view keeps it there.
+     The stage takes the space the screen allows, the notes sit beside it. --- */
+  .rg:fullscreen {
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    padding: 1rem 1.5rem 1.5rem;
+    background: var(--sl-color-bg);
+    overflow: auto;
+  }
+  .rg:fullscreen .rg-timeline {
+    display: none;
+  }
+  .rg:fullscreen .rg-controls {
+    margin-top: 0;
+  }
+  .rg:fullscreen .rg-view[data-active] {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 22rem;
     grid-template-rows: auto minmax(0, 1fr);
     gap: 1rem 1.5rem;
-    padding: 1.5rem;
-    background: var(--sl-color-bg);
-    overflow: auto;
+    flex: 1;
+    min-height: 0;
   }
-  .rg-view:fullscreen h2 {
+  .rg:fullscreen .rg-view h2 {
     grid-column: 1 / -1;
   }
-  .rg-view:fullscreen .rg-stage {
-    align-self: center;
+  .rg:fullscreen .rg-stage {
+    align-self: start;
+    width: 100%;
+    max-width: calc((100vh - 9rem) * 1920 / 1032);
+    justify-self: center;
   }
-  .rg-view:fullscreen .rg-body {
+  .rg:fullscreen .rg-body {
     display: block;
     margin: 0;
   }
-  .rg-view:fullscreen .rg-intro {
+  .rg:fullscreen .rg-intro {
     margin-bottom: 1rem;
     font-size: var(--sl-text-base);
   }
@@ -775,7 +792,7 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
 
     function toggleFullscreen() {
       if (document.fullscreenElement) document.exitFullscreen()
-      else views[current].requestFullscreen().catch(() => {})
+      else root.requestFullscreen().catch(() => {})
     }
 
     document.addEventListener('keydown', (e) => {
