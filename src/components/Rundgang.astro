@@ -340,6 +340,8 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
     display: block;
     width: 100%;
     height: auto;
+    /* While a screenshot is still on its way, show the dark frame, not its alt text. */
+    color: transparent;
   }
   .rg-spot {
     position: absolute;
@@ -668,6 +670,12 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
       })
       counter.textContent = String(view + 1)
       paintSpot(spot)
+      // Hidden views never come near the viewport, so their lazy images would only start
+      // loading once shown. Fetch the neighbours now, while this one is being read.
+      for (const n of [view + 1, view - 1]) {
+        const img = views[(n + views.length) % views.length].querySelector<HTMLImageElement>('.rg-stage img')
+        if (img) img.loading = 'eager'
+      }
 
       if (hash) history.replaceState(null, '', `#${ids[view]}${spot ? `-${spot}` : ''}`)
       if (announce) {
