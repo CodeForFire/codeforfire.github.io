@@ -404,7 +404,7 @@ export const ANSICHTEN: Ansicht[] = [
     kurz: 'PDF-Bericht',
     titel: 'PDF-Bericht',
     phase: 'nach',
-    alt: 'Dialog PDF exportieren mit acht wählbaren Abschnitten, im Hintergrund das ETB mit drei Messung-Einträgen',
+    alt: 'Dialog PDF exportieren mit acht wählbaren Abschnitten, im Hintergrund das Einsatztagebuch',
     text:
       'Ein Klick, und der Einsatzbericht liegt als PDF auf der Platte – fertig für die Akte und ' +
       'die Kreisbrandinspektion. Ihr entscheidet, welche Abschnitte hineingehören.',
@@ -423,11 +423,6 @@ export const ANSICHTEN: Ansicht[] = [
         ...at(1091, 719),
         titel: 'Exportieren',
         text: 'Lagebuch merkt sich, wohin der Einsatz zuletzt exportiert wurde.',
-      },
-      {
-        ...at(478, 402),
-        titel: 'Messungen im ETB',
-        text: 'Im Hintergrund die drei CO-Messungen als eigene ETB-Einträge – sie stehen genauso im Bericht.',
       },
     ],
   },
