@@ -50,7 +50,7 @@ export const ANSICHTEN: Ansicht[] = [
     phase: 'vor',
     alt: 'Stammdaten-Editor mit der Kategorie Fahrzeuge: sieben Fahrzeuge zweier Wachen mit Funkrufname, Sitzplätzen und ZF-Kennzeichen',
     text:
-      'Alles, was im Einsatz in einem Dropdown steht, pflegt ihr einmal vorher: Fahrzeuge, Personal, ' +
+      'Alles, was im Einsatz in einer Auswahlliste steht, pflegt ihr einmal vorher: Fahrzeuge, Personal, ' +
       'Rollen, Trupp-Typen, Checklisten und Links. Im Programm selbst ist nichts davon fest eingebaut – ' +
       'eine frische Installation startet leer.',
     hotspots: [
@@ -62,7 +62,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(1640, 137),
         titel: 'Sitzplätze und ZF',
-        text: 'Je Fahrzeug die Sitzplätze und ob es einen Zugführer fährt. Daraus rechnet die Kräfte-Ansicht später die Stärke vor.',
+        text: 'Für jedes Fahrzeug die Zahl der Sitzplätze und ob ein Zugführer mitfährt. Damit füllt die Kräfte-Ansicht die Stärke später vor.',
       },
       {
         ...at(205, 172),
@@ -72,7 +72,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(205, 611),
         titel: 'Eigene Checklisten',
-        text: 'Beliebig viele, benannt und mit Pflichtpunkten. Über „+ Neue Checkliste“ kommt die nächste dazu.',
+        text: 'Beliebig viele Listen, jede mit Namen und Pflichtpunkten. Über „+ Neue Checkliste“ kommt die nächste dazu.',
       },
       {
         ...at(1583, 76),
@@ -89,7 +89,7 @@ export const ANSICHTEN: Ansicht[] = [
     alt: 'Startseite von Lagebuch mit drei zuletzt verwendeten Einsatzdateien und je einem Knopf zum Öffnen',
     text:
       'Lagebuch startet ohne Anmeldung und ohne Server. Jeder Einsatz ist eine eigene .fwincident-Datei ' +
-      'auf dem Laptop – die ihr kopieren, archivieren oder weitergeben könnt wie jedes andere Dokument.',
+      'auf dem Laptop. Ihr könnt sie kopieren, archivieren oder weitergeben wie jedes andere Dokument.',
     hotspots: [
       {
         ...at(722, 56),
@@ -99,7 +99,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(645, 265),
         titel: 'Zuletzt verwendet',
-        text: 'Die letzten Einsätze mit ihrem Speicherort. Eine Datei pro Einsatz, benannt nach Datum und Uhrzeit.',
+        text: 'Die letzten Einsätze mit ihrem Speicherort. Eine Datei pro Einsatz, standardmäßig nach Datum und Uhrzeit benannt.',
       },
       {
         ...at(1246, 265),
@@ -113,10 +113,10 @@ export const ANSICHTEN: Ansicht[] = [
     kurz: 'Einsatzdaten',
     titel: 'Einsatzdaten',
     phase: 'im',
-    alt: 'Dialog Einsatzdaten mit Stichwort B 3 – Zimmerbrand, Einsatznummer, Straße und Ortsteil',
+    alt: 'Dialog „Einsatzdaten“ mit Stichwort B 3 – Zimmerbrand, Einsatznummer, Straße und Ortsteil',
     text:
       'Stichwort, Einsatznummer und Adresse stehen in einem Dialog. Was die ILS erst später durchgibt, ' +
-      'tragt ihr nach, sobald es da ist – der Einsatz läuft trotzdem schon.',
+      'tragt ihr nach, sobald es da ist. Dokumentieren könnt ihr trotzdem sofort.',
     hotspots: [
       {
         ...at(925, 486),
@@ -126,12 +126,12 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(1145, 486),
         titel: 'Einsatznummer',
-        text: 'Im bayerischen Format B 1.2 JJMMTT lfd.Nr.',
+        text: 'Im bayerischen Format: B 1.2 JJMMTT lfd. Nr.',
       },
       {
         ...at(965, 553),
         titel: 'Straße und Ortsteil',
-        text: 'Ergibt die Adresszeile im Bericht und in der Kopfzeile.',
+        text: 'Ergeben die Adresszeile im Bericht und in der Kopfzeile.',
       },
       {
         ...at(679, 28),
@@ -145,7 +145,7 @@ export const ANSICHTEN: Ansicht[] = [
     kurz: 'Checkliste',
     titel: 'Checkliste',
     phase: 'im',
-    alt: 'Checkliste Aufbau mit sechs Punkten, drei davon abgehakt, vier als Pflicht markiert',
+    alt: 'Checkliste „Aufbau“ mit sechs Punkten, drei davon abgehakt, vier als Pflicht markiert',
     text:
       'Eure eigenen Checklisten aus den Stammdaten, zum Beispiel für Aufbau und Abbau des ELW. ' +
       'Pflichtpunkte sind markiert, und wann eine Liste abgeschlossen wurde, steht im ETB.',
@@ -168,7 +168,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(296, 77),
         titel: 'Rückmeldung an ILS',
-        text: 'Der Countdown erinnert an die nächste Rückmeldung – erst nach einer einstellbaren Zeit, danach im Intervall. Er überlebt Neustart und Absturz.',
+        text: 'Der Countdown erinnert an die nächste Rückmeldung – erst nach einer einstellbaren Zeit, danach in festen Abständen. Er läuft auch nach einem Neustart oder Absturz weiter.',
       },
     ],
   },
@@ -177,7 +177,7 @@ export const ANSICHTEN: Ansicht[] = [
     kurz: 'ETB',
     titel: 'Einsatztagebuch',
     phase: 'im',
-    alt: 'Einsatztagebuch mit fünf Einträgen mit Zeit, Richtung, Von, An, Eintrag und Bearbeiter',
+    alt: 'Einsatztagebuch mit fünf Einträgen; Spalten Zeit, Richtung, Von, An, Eintrag und Bearbeiter',
     text:
       'Das ETB ist das Herz des Einsatzes: jede Meldung mit Zeitstempel, Richtung und Bearbeiter. ' +
       'Systemereignisse wie ein Rückzugsalarm oder eine CO-Messung landen hier automatisch.',
@@ -200,7 +200,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(1832, 240),
         titel: 'Korrigieren mit Historie',
-        text: 'Ein Eintrag lässt sich nachträglich ändern, das Original bleibt sichtbar. Nichts verschwindet still.',
+        text: 'Ein Eintrag lässt sich nachträglich ändern, das Original bleibt sichtbar. Nichts verschwindet unbemerkt.',
       },
       {
         ...at(1693, 150),
@@ -216,8 +216,8 @@ export const ANSICHTEN: Ansicht[] = [
     phase: 'im',
     alt: 'Kräfteübersicht mit vier Fahrzeugen, Stärke, Atemschutzgeräteträgern, Status und Bemerkung, oben die Gesamtstärke 0/4/26/30',
     text:
-      'Welche Fahrzeuge da sind, mit welcher Stärke und in welchem Status. ' +
-      'Die Gesamtstärke steht oben immer im Blick.',
+      'Hier seht ihr, welche Fahrzeuge da sind, mit welcher Stärke und in welchem Status. ' +
+      'Die Gesamtstärke habt ihr oben immer im Blick.',
     hotspots: [
       {
         ...at(1745, 160),
@@ -227,7 +227,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(986, 261),
         titel: 'Stärke ändern',
-        text: 'Steigt jemand um, wird die Stärke korrigiert. Jede Änderung bleibt in der Historie.',
+        text: 'Steigt jemand um, korrigiert ihr die Stärke. Jede Änderung bleibt in der Historie.',
       },
       {
         ...at(1260, 262),
@@ -249,12 +249,12 @@ export const ANSICHTEN: Ansicht[] = [
     alt: 'Führung und Funktionen: Einsatzleiter und Atemschutzüberwachung mit Name, Funkrufname, Handynummer und Beginn',
     text:
       'Wer führt, wer überwacht den Atemschutz, wer leitet welchen Abschnitt – ' +
-      'und wie ist er erreichbar. Wechselt eine Funktion, bleibt die Übergabe dokumentiert.',
+      'und wie sind alle erreichbar? Wechselt eine Funktion, bleibt die Übergabe dokumentiert.',
     hotspots: [
       {
         ...at(300, 240),
         titel: 'Funktion',
-        text: 'EL, Abschnittsleiter, AS-Überwachung und was eure Stammdaten sonst an Rollen kennen.',
+        text: 'EL, Abschnittsleiter, AS-Überwachung und alle weiteren Rollen aus euren Stammdaten.',
       },
       {
         ...at(1537, 240),
@@ -269,11 +269,11 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(1835, 240),
         titel: 'Übertrag',
-        text: 'Übergibt die Funktion an die nächste Person. Die alte Zuweisung endet mit Uhrzeit, die neue beginnt.',
+        text: 'Übergibt die Funktion an die nächste Person. Die bisherige Zuweisung wird mit Uhrzeit beendet, die neue beginnt.',
       },
       {
         ...at(1684, 150),
-        titel: 'Auch beendete',
+        titel: 'Beendete Funktionen',
         text: 'Zeigt, wer eine Funktion vorher hatte.',
       },
     ],
@@ -296,27 +296,27 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(760, 131),
         titel: 'Druckabfrage fällig',
-        text: 'Nennt Funkrufname und Trupp. Ein Klick auf das Banner springt direkt zum Trupp.',
+        text: 'Das Banner nennt Funkrufname und Trupp. Ein Klick darauf führt direkt zum Trupp.',
       },
       {
         ...at(325, 386),
         titel: 'Sicherheitstrupp',
-        text: 'Jedem Trupp wird ein Sicherheitstrupp zugeordnet. Fehlt er, warnt Lagebuch – blockiert aber nie.',
+        text: 'Jedem Trupp wird ein Sicherheitstrupp zugeordnet. Fehlt er, warnt Lagebuch, lässt euch aber weiterarbeiten.',
       },
       {
         ...at(1251, 375),
         titel: 'Restzeit',
-        text: 'Der Countdown der Einsatzzeit, nach Trupp-Typ aus den Stammdaten. „Überzogen“, wenn sie abgelaufen ist.',
+        text: 'Die verbleibende Einsatzzeit. Wie lang sie ist, legt der Trupp-Typ in den Stammdaten fest. Ist sie abgelaufen, steht hier „überzogen“.',
       },
       {
         ...at(1760, 375),
         titel: 'Druck und Rückzug',
-        text: 'Neuen Druck eintragen und bestätigen, oder den Trupp zurückziehen. Jede Druckkontrolle steht mit Uhrzeit im ETB.',
+        text: 'Neuen Druck eintragen und bestätigen oder den Trupp zurückziehen. Jede Druckkontrolle steht mit Uhrzeit im ETB.',
       },
       {
         ...at(866, 913),
         titel: 'Bereitstellen',
-        text: 'Funkrufname, Trupp-Art, Truppführer, Truppmann, Einstiegsdruck, Einsatzzeit und Abfrage-Intervall.',
+        text: 'Einen neuen Trupp anlegen: Funkrufname, Trupp-Art, Truppführer, Truppmann, Einstiegsdruck, Einsatzzeit und Abfrage-Intervall.',
       },
     ],
   },
@@ -325,7 +325,7 @@ export const ANSICHTEN: Ansicht[] = [
     kurz: 'Aufgaben',
     titel: 'Aufgaben',
     phase: 'im',
-    alt: 'Aufgabenliste mit einer fälligen Aufgabe hoher Wichtigkeit und einer mit noch 45 Minuten Timer',
+    alt: 'Aufgabenliste mit einer fälligen Aufgabe hoher Wichtigkeit und einer zweiten, deren Timer noch 45 Minuten läuft',
     text:
       'Aufträge, die nicht vergessen werden dürfen: mit Wichtigkeit, Dringlichkeit, Zuständigem und ' +
       'Timer. Wird eine Aufgabe fällig, sagt Lagebuch es an.',
@@ -333,7 +333,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(592, 360),
         titel: 'Fällig',
-        text: 'Der Timer ist abgelaufen – rot in der Liste und als Sprachansage.',
+        text: 'Der Timer ist abgelaufen: Die Aufgabe steht rot in der Liste, und Lagebuch sagt sie an.',
       },
       {
         ...at(340, 360),
@@ -353,7 +353,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(700, 913),
         titel: 'Neue Aufgabe',
-        text: 'Wichtigkeit, Dringlichkeit, Zuständiger und Timer in Minuten – oder direkt aus einem ETB-Eintrag.',
+        text: 'Wichtigkeit, Dringlichkeit, Zuständigen und Timer in Minuten eintragen – oder die Aufgabe direkt aus einem ETB-Eintrag anlegen.',
       },
     ],
   },
@@ -364,18 +364,18 @@ export const ANSICHTEN: Ansicht[] = [
     phase: 'im',
     alt: 'CO-Messprotokoll für die Hauptstraße 12 mit drei Stockwerken zu je zwei Wohnungen, eine davon mit 120 ppm rot markiert',
     text:
-      'Haus, Stockwerk, Wohnung – aufgebaut wie die Türmarkierung vor Ort. Jede Wohnung führt ' +
+      'Haus, Stockwerk, Wohnung – aufgebaut wie das Gebäude vor Ort. Für jede Wohnung gibt es ' +
       'eine Messreihe mit Uhrzeit, und jede Messung steht auch im ETB und im Bericht.',
     hotspots: [
       {
         ...at(600, 375),
         titel: 'Messwert mit Gefahrenfarbe',
-        text: '120 ppm färben die Wohnung rot. Hier wurde dreimal gemessen: 120, 40, 5 ppm nach dem Lüften – der ganze Verlauf bleibt erhalten.',
+        text: '120 ppm färben die Wohnung rot. Hier wurde dreimal gemessen: 120, dann 40 und nach dem Lüften 5 ppm. Der ganze Verlauf bleibt erhalten.',
       },
       {
         ...at(430, 311),
         titel: 'Fortschritt',
-        text: 'Wie viele Einheiten durchsucht, betroffen und noch offen sind – als Zahl und als Balken.',
+        text: 'Zeigt, wie viele Einheiten durchsucht, betroffen und noch offen sind – als Zahl und als Balken.',
       },
       {
         ...at(340, 535),
@@ -385,7 +385,7 @@ export const ANSICHTEN: Ansicht[] = [
       {
         ...at(298, 372),
         titel: 'Stockwerk',
-        text: 'Durchsuchte Wohnungen je Stockwerk auf einen Blick. OG und UG lassen sich jederzeit ergänzen.',
+        text: 'Durchsuchte Wohnungen je Stockwerk auf einen Blick. Weitere Ober- und Untergeschosse lassen sich jederzeit ergänzen.',
       },
       {
         ...at(1690, 303),
@@ -404,9 +404,9 @@ export const ANSICHTEN: Ansicht[] = [
     kurz: 'PDF-Bericht',
     titel: 'PDF-Bericht',
     phase: 'nach',
-    alt: 'Dialog PDF exportieren mit acht wählbaren Abschnitten, im Hintergrund das Einsatztagebuch',
+    alt: 'Dialog „PDF exportieren“ mit acht wählbaren Abschnitten, im Hintergrund das Einsatztagebuch',
     text:
-      'Ein Klick, und der Einsatzbericht liegt als PDF auf der Platte – fertig für die Akte und ' +
+      'Ein Klick, und der Einsatzbericht liegt als PDF auf dem Rechner – fertig für die Akte und ' +
       'die Kreisbrandinspektion. Ihr entscheidet, welche Abschnitte hineingehören.',
     hotspots: [
       {
