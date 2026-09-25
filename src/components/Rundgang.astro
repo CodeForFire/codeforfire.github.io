@@ -540,10 +540,13 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
   .rg:fullscreen {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
+    height: 100vh;
     max-width: none;
     padding: 1rem 1.5rem 1.5rem;
     background: var(--sl-color-bg);
-    overflow: auto;
+    /* The screen is the limit: only the notes scroll when they do not fit beside the stage. */
+    overflow: hidden;
   }
   .rg:fullscreen .rg-timeline {
     display: none;
@@ -570,7 +573,10 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
   }
   .rg:fullscreen .rg-body {
     display: block;
+    min-height: 0;
     margin: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .rg:fullscreen .rg-intro {
     margin-bottom: 1rem;
@@ -670,6 +676,9 @@ const phases = (Object.keys(PHASEN) as Phase[]).map((phase) => ({
       })
       counter.textContent = String(view + 1)
       paintSpot(spot)
+      if (spot && document.fullscreenElement === root) {
+        notesOf(view)[spot - 1].scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' })
+      }
       // Hidden views never come near the viewport, so their lazy images would only start
       // loading once shown. Fetch the neighbours now, while this one is being read.
       for (const n of [view + 1, view - 1]) {
