@@ -9,6 +9,7 @@ node_modules/
 # docs/ over there is the single source of truth; nothing here is hand-edited.
 src/content/docs/datenschutz.md
 src/assets/lagebuch-logo.png
+src/assets/screenshots/
 public/bilder/
 
 # CI checkout of the lagebuch repo

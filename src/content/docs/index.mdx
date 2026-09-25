@@ -14,6 +14,9 @@ hero:
     - text: Probefahrt in 5 Minuten
       link: /probefahrt/
       variant: minimal
+    - text: Rundgang
+      link: /rundgang/
+      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components'
@@ -26,19 +29,22 @@ Atemschutzüberwachung, Aufgaben, CO-Messprotokoll und PDF-Bericht.
 <img
   src="/bilder/einsatz-flow.gif"
   alt="Ein Einsatz in Lagebuch: Einsatzdaten, ETB, Kräfte, Atemschutz, Aufgaben, CO-Messung, PDF"
-  style="width: 100%; border-radius: 0.5rem; margin: 2rem 0;"
+  style="width: 100%; border-radius: 0.5rem; margin: 2rem 0 0.75rem;"
 />
+
+Jede Ansicht im Detail, mit Erklärungen zu jedem Element: der
+[Rundgang durch einen Einsatz](/rundgang/).
 
 ## Warum Lagebuch?
 
 <CardGrid>
   <Card title="Läuft offline – wirklich" icon="laptop">
     Kein Internet, kein Konto, kein Server. Jeder Einsatz ist eine einzelne
-    `.fwincident`-Datei, die dir gehört und die du archivieren, kopieren oder
-    weitergeben kannst.
+    `.fwincident`-Datei, die euch gehört und die ihr archivieren, kopieren oder
+    weitergeben könnt.
   </Card>
   <Card title="Keine Daten verlassen den ELW" icon="approve-check">
-    Stammdaten, Namen und Handynummern liegen nur auf deinem Gerät. Die
+    Stammdaten, Namen und Handynummern liegen nur auf euren Geräten. Die
     optionale Mehrgeräte-Verbindung läuft im LAN oder über Tailscale,
     TLS-gesichert mit PIN – ohne Cloud, ohne Telemetrie.
     [Was genau wo gespeichert wird](/datenschutz/)
