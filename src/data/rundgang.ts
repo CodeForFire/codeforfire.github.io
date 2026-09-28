@@ -242,6 +242,38 @@ export const ANSICHTEN: Ansicht[] = [
     ],
   },
   {
+    id: 'kontakte',
+    kurz: 'Kontakte',
+    titel: 'Kontakte',
+    phase: 'im',
+    alt: 'Kontakte-Tab mit der Einsatzgruppe aus den Stammdaten: Name, Rolle, Funkrufname, Zuständigkeit und Telefon',
+    text:
+      'Das Telefonbuch der Feuerwehr, direkt aus euren Stammdaten: wer, in welcher Rolle, ' +
+      'wie erreichbar – und wofür er oder sie zuständig ist.',
+    hotspots: [
+      {
+        ...at(582, 152),
+        titel: 'Suche',
+        text: 'Findet, wen ihr sucht – über Name, Rolle, Funkrufname oder Zuständigkeit.',
+      },
+      {
+        ...at(300, 213),
+        titel: 'Name, Rolle, Funkrufname',
+        text: 'Die Zeile einer Einsatzkraft: Name, Rolle und Funkrufname, genau wie der Bericht sie kennt.',
+      },
+      {
+        ...at(653, 234),
+        titel: 'Zuständigkeit',
+        text: 'Wofür jemand zuständig ist – und der Text, den die Suche als Treffer markiert.',
+      },
+      {
+        ...at(1179, 224),
+        titel: 'Anrufen',
+        text: 'Ein Klick wählt die Nummer in der Telefon-App des Rechners. Die Nummern bleiben auf euren Geräten.',
+      },
+    ],
+  },
+  {
     id: 'funktionen',
     kurz: 'Funktionen',
     titel: 'Funktionen',
@@ -396,6 +428,38 @@ export const ANSICHTEN: Ansicht[] = [
         ...at(655, 913),
         titel: 'Mehrere Häuser',
         text: 'Ein Einsatz kann mehrere Gebäude umfassen, jedes mit eigenem Aufbau.',
+      },
+    ],
+  },
+  {
+    id: 'beteiligte',
+    kurz: 'Beteiligte',
+    titel: 'Beteiligte',
+    phase: 'im',
+    alt: 'Beteiligte-Tab mit den Karten der Menschen des Einsatzes: Name, Telefon und Notiz, oben die Überschrift BETEILIGTE',
+    text:
+      'Wer an diesem Einsatz hängt, steht hier: eine Karte pro Person mit Telefon und einer ' +
+      'Notiz. Die Einträge lassen sich direkt in der Karte korrigieren.',
+    hotspots: [
+      {
+        ...at(1065, 203),
+        titel: 'Name',
+        text: 'Eine Karte pro Person an diesem Einsatz. Der Name ist direkt in der Karte änderbar.',
+      },
+      {
+        ...at(1065, 245),
+        titel: 'Telefon',
+        text: 'Zum Erreichen der Person, wenn sie später gebraucht wird.',
+      },
+      {
+        ...at(1065, 287),
+        titel: 'Notiz',
+        text: 'Was die Person angeht: „Bewohnerin 2. OG, über DLK gerettet“, „Polizei vor Ort“, …',
+      },
+      {
+        ...at(1854, 205),
+        titel: 'Entfernen',
+        text: 'Nimmt eine Karte aus diesem Einsatz – die Daten bleiben in der Historie sichtbar.',
       },
     ],
   },
