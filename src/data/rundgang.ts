@@ -442,19 +442,19 @@ export const ANSICHTEN: Ansicht[] = [
       'Notiz. Die Einträge lassen sich direkt in der Karte korrigieren.',
     hotspots: [
       {
-        ...at(1065, 203),
+        ...at(440, 197),
         titel: 'Name',
         text: 'Eine Karte pro Person an diesem Einsatz. Der Name ist direkt in der Karte änderbar.',
       },
       {
-        ...at(1065, 245),
+        ...at(268, 243),
         titel: 'Telefon',
         text: 'Zum Erreichen der Person, wenn sie später gebraucht wird.',
       },
       {
-        ...at(1065, 287),
+        ...at(480, 450),
         titel: 'Notiz',
-        text: 'Was die Person angeht: „Bewohnerin 2. OG, über DLK gerettet“, „Polizei vor Ort“, …',
+        text: 'Was die Person angeht: „Nachbar, hat die Feuerwehr alarmiert“, „Polizei vor Ort“, …',
       },
       {
         ...at(1854, 205),
