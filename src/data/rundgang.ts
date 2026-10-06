@@ -360,7 +360,8 @@ export const ANSICHTEN: Ansicht[] = [
     alt: 'Aufgabenliste mit einer fälligen Aufgabe hoher Wichtigkeit und einer zweiten, deren Timer noch 45 Minuten läuft',
     text:
       'Aufträge, die nicht vergessen werden dürfen: mit Wichtigkeit, Dringlichkeit, Zuständigem und ' +
-      'Timer. Wird eine Aufgabe fällig, sagt Lagebuch es an.',
+      'Timer. Wird eine Aufgabe fällig, sagt Lagebuch es an. Über den Stift (oder Enter/F2) lässt ' +
+      'sich eine Aufgabe nachträglich korrigieren und mit +5 MIN aufschieben.',
     hotspots: [
       {
         ...at(592, 360),

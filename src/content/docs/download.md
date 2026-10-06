@@ -16,6 +16,13 @@ Ein Paket pro Plattform liegt bei jedem
 Alle Pakete bringen die .NET-Laufzeit mit; es muss nichts weiter installiert
 werden.
 
+:::note[Mehrere Geräte: alle auf dieselbe Version]
+Geräte, die gemeinsam an einem Einsatz arbeiten, müssen dasselbe
+Sync-Protokoll sprechen. Ab Lagebuch 0.8.0 (Sync-Protokoll 7) braucht jedes
+Gerät im gemeinsamen Einsatz 0.8.0 – ELW-Laptop, zweiter Laptop und
+Android-App. Aktualisiert deshalb alle Geräte zusammen, nicht erst im Einsatz.
+:::
+
 ## Die Warnung beim ersten Start
 
 :::caution[Die Pakete sind noch nicht signiert]
