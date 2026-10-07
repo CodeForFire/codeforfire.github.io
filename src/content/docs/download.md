@@ -23,6 +23,28 @@ Gerät im gemeinsamen Einsatz 0.8.0 – ELW-Laptop, zweiter Laptop und
 Android-App. Aktualisiert deshalb alle Geräte zusammen, nicht erst im Einsatz.
 :::
 
+## Windows: mit winget
+
+Unter Windows geht es ohne Download über den Windows-Paket-Manager:
+
+```powershell
+winget install CodeForFire.Lagebuch
+```
+
+winget lädt dasselbe `.msi` aus dem GitHub-Release, prüft es gegen die im
+Paketkatalog hinterlegte SHA-256-Prüfsumme und installiert es für alle Benutzer
+des Rechners – Windows fragt deshalb einmal nach Administratorrechten. Die
+SmartScreen-Warnung erscheint auf diesem Weg nicht. Aktualisieren geht genauso:
+
+```powershell
+winget upgrade CodeForFire.Lagebuch
+```
+
+Eine neue Version erscheint in winget erst Stunden bis Wochen nach dem
+Release, weil sie für den Paketkatalog erst freigegeben werden muss. Wer alle Geräte
+sofort auf eine neue Version bringen muss, nimmt das `.msi` direkt aus dem
+Release.
+
 ## Die Warnung beim ersten Start
 
 :::caution[Die Pakete sind noch nicht signiert]
@@ -33,7 +55,8 @@ Bis dahin könnt ihr stattdessen [den Download selbst
 prüfen](#downloads-prüfen) – das ist nachweisbarer als jede Signatur-Warnung.
 :::
 
-- **Windows** – `.msi` ausführen; erscheint SmartScreen, *Weitere
+- **Windows** – am einfachsten [mit winget](#windows-mit-winget), dann gibt
+  es keine Warnung. Sonst `.msi` ausführen; erscheint SmartScreen, *Weitere
   Informationen → Trotzdem ausführen*.
 - **macOS** – `.dmg` öffnen, Lagebuch nach *Programme* ziehen, dann einmalig
   **Rechtsklick → Öffnen** (oder
