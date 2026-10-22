@@ -489,7 +489,7 @@ export const ANSICHTEN: Ansicht[] = [
         text: 'Fotos und PDFs aus dem Einsatz werden in den Bericht eingebettet. Jedes angehängte PDF bekommt eine Deckseite.',
       },
       {
-        ...at(1091, 719),
+        ...at(828, 719),
         titel: 'Exportieren',
         text: 'Lagebuch merkt sich, wohin der Einsatz zuletzt exportiert wurde.',
       },
