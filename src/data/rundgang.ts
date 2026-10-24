@@ -88,7 +88,7 @@ export const ANSICHTEN: Ansicht[] = [
     phase: 'vor',
     alt: 'Startseite von Lagebuch mit drei zuletzt verwendeten Einsatzdateien und je einem Knopf zum Öffnen',
     text:
-      'Lagebuch startet ohne Anmeldung und ohne Server. Jeder Einsatz ist eine eigene .fwincident-Datei ' +
+      'Lagebuch startet ohne Anmeldung und ohne Server. Jeder Einsatz ist eine eigene .lagebuch-Datei ' +
       'auf dem Laptop. Ihr könnt sie kopieren, archivieren oder weitergeben wie jedes andere Dokument.',
     hotspots: [
       {
