@@ -29,7 +29,7 @@ paar Namen, Checklisten und Links.
 
 ## 3. Übungseinsatz öffnen
 
-[`uebung.fwincident` herunterladen](https://github.com/CodeForFire/lagebuch/raw/main/docs/samples/uebung.fwincident)
+[`uebung.lagebuch` herunterladen](https://github.com/CodeForFire/lagebuch/raw/main/docs/samples/uebung.lagebuch)
 
 In Lagebuch **ÖFFNEN** wählen. Der Einsatz „B 3 – Zimmerbrand“ hat schon
 ETB-Einträge, vier Fahrzeuge, einen Angriffstrupp unter Atemschutz mit
