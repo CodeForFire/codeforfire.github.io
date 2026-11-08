@@ -10,7 +10,10 @@ const ORG = 'https://github.com/CodeForFire'
 const LAGEBUCH = `${ORG}/lagebuch`
 const HELFER = `${ORG}/helfer`
 
-/** Developer-facing and English: linked, never copied. */
+/**
+ * Developer-facing and English: linked, never copied.
+ * @param {Array<[label: string, link: string]>} items
+ */
 const github = (items) => ({
   label: 'Auf GitHub',
   collapsed: true,
