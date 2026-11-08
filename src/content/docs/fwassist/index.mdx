@@ -1,0 +1,102 @@
+---
+title: FwAssist
+description: Kleine Werkzeuge für Feuerwehrangehörige auf dem Android-Handy – Stoppuhr, Buchstabieralphabet, Schaummittel, RTH-Landeplatz, Dekon-Platz. Offline, ohne Konto, Open Source.
+template: splash
+hero:
+  tagline: Kleine Helfer für die Hosentasche. Offline. Open Source.
+  image:
+    alt: FwAssist
+    file: ../../../assets/fwassist-icon.png
+  actions:
+    - text: Herunterladen
+      link: '#installation'
+      icon: right-arrow
+    - text: Die Helfer
+      link: '#die-helfer'
+      variant: minimal
+---
+
+import { Image } from 'astro:assets'
+import uebersicht from '../../../assets/fwassist/screenshots/01-uebersicht.png'
+import funkalphabet from '../../../assets/fwassist/screenshots/04-funkalphabet.png'
+import schaummittel from '../../../assets/fwassist/screenshots/05-schaummittel.png'
+import rth from '../../../assets/fwassist/screenshots/06-rth-landeplatz-tag.png'
+import dekon from '../../../assets/fwassist/screenshots/09-dekon-stufe-2.png'
+
+FwAssist ist eine Android-App mit kleinen Werkzeugen für Feuerwehrangehörige.
+Jedes Werkzeug – ein *Helfer* – macht genau eine Sache, funktioniert ohne Netz
+und lässt sich mit einem eigenen Symbol direkt vom Startbildschirm öffnen.
+
+:::caution[Frühe Testversion]
+FwAssist ist noch in einer frühen Entwicklungsphase; es gibt bisher nur
+Vorabversionen. Ein Eintrag im Play Store ist in Vorbereitung. Probiert es aus
+und sagt uns, was fehlt oder nicht passt.
+:::
+
+<div class="fw-shots not-content">
+  <Image src={uebersicht} widths={[200, 400]} sizes="12rem" alt="Übersicht mit allen Helfern" />
+  <Image src={funkalphabet} widths={[200, 400]} sizes="12rem" alt="Buchstabieralphabet" />
+  <Image src={schaummittel} widths={[200, 400]} sizes="12rem" alt="Schaummittel-Rechner" />
+  <Image src={rth} widths={[200, 400]} sizes="12rem" alt="RTH-Landeplatz bei Tag" />
+  <Image src={dekon} widths={[200, 400]} sizes="12rem" alt="Dekon-Stufe II" />
+</div>
+
+## Die Helfer
+
+| Helfer | Was er tut |
+|---|---|
+| **Stoppuhr** | Zeit messen, zum Beispiel bei einer Übung. Läuft weiter, während ein anderer Helfer offen ist. |
+| **Buchstabieralphabet** | Wörter für den Funk buchstabieren, wahlweise mit der alten Tafel (Anton, Berta, …), nach DIN 5009:2022 (Aachen, Berlin, …) oder mit dem NATO-Alphabet (Alfa, Bravo, …). |
+| **Schaummittel** | Rechnet in beide Richtungen: wie viel Schaum der Vorrat ergibt und wie viel Wasser und Schaummittel ein Raum braucht. |
+| **RTH-Landeplatz** | Vorgaben und Ablauf, wenn die Feuerwehr einen Landeplatz für den Rettungshubschrauber vorbereitet, getrennt für Tag und Nacht. |
+| **Dekon-Platz** | Dekon-Stufen I bis III: Sofortmaßnahmen, Aufbau und Plan für Stufe II, Technik und Ablauf für Stufe III. |
+
+Weitere Helfer folgen. Welcher fehlt euch? Schreibt es unter
+[Ideen](https://github.com/CodeForFire/helfer/discussions/categories/ideen).
+
+## Ein Symbol pro Helfer
+
+Nach der Installation hat jeder Helfer ein eigenes Symbol in der App-Übersicht
+des Handys und öffnet sich damit direkt. Wer einen Helfer nicht braucht,
+schaltet sein Symbol unter **Einstellungen** aus – der Helfer bleibt in der App
+erreichbar.
+
+## Datenschutz
+
+Kein Konto, keine Anmeldung, keine Cloud, kein Server. Keine Telemetrie, keine
+Werbung. Die App fordert keine Berechtigungen an und hat keinen Netzzugriff –
+es gibt also nichts, was euer Handy verlassen könnte.
+
+## Installation
+
+Die APK für **Android 7.0 und neuer** liegt bei den
+[Releases](https://github.com/CodeForFire/helfer/releases) auf GitHub – nehmt
+die oberste Version und dort die Datei `helfer-<version>.apk`.
+
+1. Die APK auf dem Handy herunterladen und öffnen.
+2. Beim ersten Mal fragt Android, ob der Browser oder Dateimanager Apps
+   installieren darf: *Installation aus unbekannten Quellen* für diese App
+   erlauben.
+3. Installieren. Danach erscheinen FwAssist und die Symbole der Helfer in der
+   App-Übersicht.
+
+Ein Update installiert ihr genauso: die neue APK öffnen, Android aktualisiert
+die App und behält die Einstellungen.
+
+### Downloads prüfen
+
+Jedem Release liegt `SHA256SUMS.txt` bei, und die APK trägt einen
+Sigstore-Herkunftsnachweis. Die Prüfsummen decken APK und SBOM ab; beide
+gehören zum Prüfen in denselben Ordner wie `SHA256SUMS.txt`:
+
+```sh
+sha256sum -c SHA256SUMS.txt
+gh attestation verify helfer-<version>.apk --repo CodeForFire/helfer
+```
+
+## Mitmachen
+
+FwAssist kommt von denselben Leuten wie [Lagebuch](/lagebuch/) und sieht
+deshalb auch so aus. Fragen, Ideen und Berichte von der letzten Übung gerne im
+[Forum](https://github.com/CodeForFire/helfer/discussions) – Fehler in ein
+[Issue](https://github.com/CodeForFire/helfer/issues/new/choose).

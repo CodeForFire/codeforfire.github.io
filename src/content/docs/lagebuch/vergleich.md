@@ -29,7 +29,7 @@ Mehrgeräte-Verbindung im eigenen LAN läuft.
 Die zweite Zeile zählt für die Kreisbrandinspektion: Namen, Handynummern und
 Adressen bleiben auf euren Geräten. Was das im Detail bedeutet – und was ihr
 als Wehr selbst regeln müsst – steht unter [Datenschutz und
-Sicherheit](/datenschutz/).
+Sicherheit](/lagebuch/datenschutz/).
 
 Der Rest ist Ausstattung. Lagebuch ist jünger als die kommerziellen Produkte
 und deckt nicht alles ab, was ein Grundsystem mit Modulbaukasten kann. Was als
