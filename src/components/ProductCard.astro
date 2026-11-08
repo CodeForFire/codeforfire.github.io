@@ -1,0 +1,81 @@
+---
+// One product on the landing page. Lagebuch and FwAssist get the same card,
+// side by side, so neither reads as the add-on to the other.
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+import { LinkButton } from '@astrojs/starlight/components'
+
+interface Props {
+  name: string
+  /** What it is, in a few words. */
+  claim: string
+  /** Where it runs. */
+  platforms: string
+  logo: ImageMetadata
+  more: string
+  download: string
+}
+
+const { name, claim, platforms, logo, more, download } = Astro.props
+---
+
+<article class="product not-content">
+  <Image src={logo} alt="" width={96} height={96} class="product-logo" />
+  <h2>{name}</h2>
+  <p class="product-claim">{claim}</p>
+  <div class="product-body"><slot /></div>
+  <p class="product-platforms">{platforms}</p>
+  <div class="product-actions">
+    <LinkButton href={more} icon="right-arrow">Mehr erfahren</LinkButton>
+    <LinkButton href={download} variant="secondary">Herunterladen</LinkButton>
+  </div>
+</article>
+
+<style>
+  .product {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.75rem;
+    background: var(--sl-color-black);
+  }
+  .product-logo {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 1rem;
+  }
+  h2 {
+    margin: 0;
+    font-size: var(--sl-text-h3);
+    color: var(--sl-color-white);
+  }
+  .product-claim {
+    margin: 0;
+    font-size: var(--sl-text-lg);
+    color: var(--sl-color-white);
+  }
+  .product-body {
+    color: var(--sl-color-gray-2);
+  }
+  .product-body :global(p) {
+    margin: 0;
+  }
+  .product-platforms {
+    margin: 0;
+    margin-top: auto;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+  .product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  /* Starlight spaces consecutive content blocks and buttons with margins;
+     the flex gap does that here. */
+  .product-actions > :global(*) {
+    margin: 0;
+  }
+</style>

@@ -17,7 +17,7 @@ erfundene Namen.
 Das Paket für euer System aus den
 [Releases](https://github.com/CodeForFire/lagebuch/releases) laden – die
 Schritte pro Plattform stehen unter [Herunterladen und
-installieren](/download/).
+installieren](/lagebuch/download/).
 
 ## 2. Stammdaten importieren
 

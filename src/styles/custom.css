@@ -1,4 +1,4 @@
-/* Lagebuch — Feuerwehr-Rot als Akzent, abgeleitet aus dem Logo.
+/* CodeForFire — Feuerwehr-Rot als Akzent, abgeleitet aus dem Lagebuch-Logo.
    Starlight erwartet je neun Abstufungen für Accent und Gray. */
 :root {
   --sl-color-accent-low: #3b0a08;
@@ -26,4 +26,46 @@
 /* Screenshots und das Demo-GIF sollen nicht wie Icons wirken. */
 .sl-markdown-content img {
   border-radius: 0.5rem;
+}
+
+/* Startseite: Lagebuch und FwAssist gleichberechtigt nebeneinander,
+   auf dem Handy untereinander. */
+.products {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+/* Starlight gives every block after the first a top margin, which would
+   push the second card down. */
+.sl-markdown-content .products > * {
+  margin: 0;
+}
+@media (min-width: 50rem) {
+  .products {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* FwAssist: Handy-Screenshots als Reihe, die auf schmalen Bildschirmen
+   seitlich scrollt statt winzig zu werden. */
+.fw-shots {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-block: 0.5rem 1rem;
+  margin-block: 2rem;
+  scroll-snap-type: x mandatory;
+}
+.fw-shots img {
+  flex: 0 0 auto;
+  width: 12rem;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid var(--sl-color-gray-5);
+  scroll-snap-align: start;
+}
+
+/* Das FwAssist-Symbol ist quadratisch; abgerundet wie auf dem Handy. */
+.hero img[src*='fwassist-icon'] {
+  border-radius: 22%;
 }

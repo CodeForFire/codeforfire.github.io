@@ -105,5 +105,5 @@ Internetzugang.
 
 ## Nächster Schritt
 
-Mit den Beispieldaten aus der [Probefahrt in 5 Minuten](/probefahrt/) seht ihr
+Mit den Beispieldaten aus der [Probefahrt in 5 Minuten](/lagebuch/probefahrt/) seht ihr
 direkt einen gefüllten Einsatz statt leerer Dropdowns.

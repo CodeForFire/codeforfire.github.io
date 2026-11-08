@@ -1,6 +1,7 @@
-// Copies the user-facing content that lives in CodeForFire/lagebuch into this
-// site. docs/ over there is the single source of truth: nothing this script
-// writes is hand-edited here, and every target is gitignored.
+// Copies the user-facing content that lives in the app repositories
+// (CodeForFire/lagebuch and CodeForFire/helfer) into this site. docs/ over
+// there is the single source of truth: nothing this script writes is
+// hand-edited here, and every target is gitignored.
 //
 // Run it before `astro build` / `astro dev` (npm run sync).
 
@@ -14,22 +15,25 @@ const siteRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
 const BLOB = 'https://github.com/CodeForFire/lagebuch/blob/main'
 
-/** Where a checkout of CodeForFire/lagebuch might be, most specific first. */
-const CANDIDATES = [
-  process.env.LAGEBUCH_PATH,
-  join(siteRoot, '.lagebuch'), // the CI checkout
-  join(siteRoot, '..', 'lagebuch'),
-  join(siteRoot, '..', '..', 'lagebuch'), // the local dev layout
-].filter(Boolean)
+/** Where a checkout of CodeForFire/<name> might be, most specific first. */
+function candidates(name, envVar) {
+  return [
+    process.env[envVar],
+    join(siteRoot, `.${name}`), // the CI checkout
+    join(siteRoot, '..', name),
+    join(siteRoot, '..', '..', name), // the local dev layout
+  ].filter(Boolean)
+}
 
-function findLagebuch() {
-  for (const candidate of CANDIDATES) {
+function findRepo(name, envVar) {
+  const looked = candidates(name, envVar)
+  for (const candidate of looked) {
     if (existsSync(join(candidate, 'docs'))) return resolve(candidate)
   }
   throw new Error(
-    'No checkout of CodeForFire/lagebuch found. Looked for a docs/ directory in:\n' +
-      CANDIDATES.map((c) => `  - ${c}`).join('\n') +
-      '\n\nClone it next to this repo, or set LAGEBUCH_PATH.',
+    `No checkout of CodeForFire/${name} found. Looked for a docs/ directory in:\n` +
+      looked.map((c) => `  - ${c}`).join('\n') +
+      `\n\nClone it next to this repo, or set ${envVar}.`,
   )
 }
 
@@ -38,8 +42,23 @@ async function required(path, why) {
   try {
     return await readFile(path, 'utf8')
   } catch {
-    throw new Error(`Missing in the lagebuch checkout: ${path}\n  (needed for ${why})`)
+    throw new Error(`Missing in the app checkout: ${path}\n  (needed for ${why})`)
   }
+}
+
+/** Copy every PNG in `from` into a freshly emptied `to`; fail if there are none. */
+async function copyScreenshots(from, to) {
+  let shots
+  try {
+    shots = (await readdir(from)).filter((f) => f.endsWith('.png'))
+  } catch {
+    throw new Error(`Missing in the app checkout: ${from}\n  (needed for the screenshots)`)
+  }
+  if (shots.length === 0) throw new Error(`No screenshots found in ${from}`)
+  await rm(to, { recursive: true, force: true })
+  await mkdir(to, { recursive: true })
+  for (const shot of shots) await cp(join(from, shot), join(to, shot))
+  return shots.map((shot) => join(to, shot))
 }
 
 /**
@@ -48,7 +67,7 @@ async function required(path, why) {
  * which has a better home on this site.
  */
 const LINK_REWRITES = [
-  ['](../README.md#downloads-prüfen)', '](/download/#downloads-prüfen)'],
+  ['](../README.md#downloads-prüfen)', '](/lagebuch/download/#downloads-prüfen)'],
   ['](master-data.md)', `](${BLOB}/docs/master-data.md)`],
   ['](../ROADMAP.md)', `](${BLOB}/ROADMAP.md)`],
   ['](../SECURITY.md)', `](${BLOB}/SECURITY.md)`],
@@ -76,7 +95,7 @@ async function syncDatenschutz(lagebuch) {
     body = body.replaceAll(from, to)
   }
 
-  const target = join(siteRoot, 'src', 'content', 'docs', 'datenschutz.md')
+  const target = join(siteRoot, 'src', 'content', 'docs', 'lagebuch', 'datenschutz.md')
   await writeFile(
     target,
     frontmatter({
@@ -90,7 +109,7 @@ async function syncDatenschutz(lagebuch) {
   return target
 }
 
-async function syncImages(lagebuch) {
+async function syncLagebuchImages(lagebuch) {
   const written = []
 
   const logoSource = join(lagebuch, 'docs', 'logo', 'lagebuch-logo.png')
@@ -105,27 +124,18 @@ async function syncImages(lagebuch) {
   await mkdir(bilder, { recursive: true })
 
   const gifSource = join(lagebuch, 'docs', 'demo', 'einsatz-flow.gif')
-  await required(gifSource, 'the demo animation on the landing page')
+  await required(gifSource, 'the demo animation on the Lagebuch start page')
   await cp(gifSource, join(bilder, 'einsatz-flow.gif'))
   written.push(join(bilder, 'einsatz-flow.gif'))
 
-  const shotsDir = join(lagebuch, 'docs', 'screenshots')
-  let shots
-  try {
-    shots = (await readdir(shotsDir)).filter((f) => f.endsWith('.png'))
-  } catch {
-    throw new Error(`Missing in the lagebuch checkout: ${shotsDir}\n  (needed for the screenshots)`)
-  }
-  if (shots.length === 0) throw new Error(`No screenshots found in ${shotsDir}`)
   // Into src/assets, not public/: the Rundgang page renders them through
   // astro:assets, which needs them as imports to emit WebP and srcsets.
-  const screenshots = join(siteRoot, 'src', 'assets', 'screenshots')
-  await rm(screenshots, { recursive: true, force: true })
-  await mkdir(screenshots, { recursive: true })
-  for (const shot of shots) {
-    await cp(join(shotsDir, shot), join(screenshots, shot))
-    written.push(join(screenshots, shot))
-  }
+  written.push(
+    ...(await copyScreenshots(
+      join(lagebuch, 'docs', 'screenshots'),
+      join(siteRoot, 'src', 'assets', 'screenshots'),
+    )),
+  )
 
   await cp(logoSource, join(bilder, 'favicon.png'))
   written.push(join(bilder, 'favicon.png'))
@@ -149,7 +159,27 @@ function describe(repo) {
   }
 }
 
-const lagebuch = findLagebuch()
-console.log(`sync-docs: reading from ${lagebuch} @ ${describe(lagebuch)}`)
-const written = [await syncDatenschutz(lagebuch), ...(await syncImages(lagebuch))]
+/** The FwAssist start page: the launcher icon and the phone screenshots. */
+async function syncHelfer(helfer) {
+  const iconSource = join(helfer, 'docs', 'play', 'icon-512.png')
+  await required(iconSource, 'the FwAssist hero icon')
+  const iconTarget = join(siteRoot, 'src', 'assets', 'fwassist-icon.png')
+  await cp(iconSource, iconTarget)
+
+  const shots = await copyScreenshots(
+    join(helfer, 'docs', 'screenshots'),
+    join(siteRoot, 'src', 'assets', 'fwassist', 'screenshots'),
+  )
+  return [iconTarget, ...shots]
+}
+
+const lagebuch = findRepo('lagebuch', 'LAGEBUCH_PATH')
+console.log(`sync-docs: reading Lagebuch from ${lagebuch} @ ${describe(lagebuch)}`)
+const helfer = findRepo('helfer', 'HELFER_PATH')
+console.log(`sync-docs: reading FwAssist from ${helfer} @ ${describe(helfer)}`)
+const written = [
+  await syncDatenschutz(lagebuch),
+  ...(await syncLagebuchImages(lagebuch)),
+  ...(await syncHelfer(helfer)),
+]
 console.log(`sync-docs: wrote ${written.length} files`)

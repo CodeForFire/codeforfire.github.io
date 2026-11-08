@@ -9,7 +9,7 @@
     "check": "astro check"
   },
   "license": "MIT",
-  "description": "Website für Lagebuch — die Einsatzdokumentation von CodeForFire",
+  "description": "Website von CodeForFire — Lagebuch und FwAssist",
   "dependencies": {
     "@astrojs/starlight": "^0.42.8",
     "astro": "^7.4.5",

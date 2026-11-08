@@ -5,15 +5,19 @@ dist/
 # Dependencies
 node_modules/
 
-# Content synced from CodeForFire/lagebuch by scripts/sync-docs.mjs.
-# docs/ over there is the single source of truth; nothing here is hand-edited.
-src/content/docs/datenschutz.md
+# Content synced from CodeForFire/lagebuch and CodeForFire/helfer by
+# scripts/sync-docs.mjs. docs/ over there is the single source of truth;
+# nothing here is hand-edited.
+src/content/docs/lagebuch/datenschutz.md
 src/assets/lagebuch-logo.png
 src/assets/screenshots/
+src/assets/fwassist-icon.png
+src/assets/fwassist/
 public/bilder/
 
-# CI checkout of the lagebuch repo
+# CI checkouts of the app repos
 .lagebuch/
+.helfer/
 
 # Environment
 .env
