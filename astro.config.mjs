@@ -8,7 +8,7 @@ const site = 'https://codeforfire.github.io'
 
 const ORG = 'https://github.com/CodeForFire'
 const LAGEBUCH = `${ORG}/lagebuch`
-const HELFER = `${ORG}/helfer`
+const FWASSIST = `${ORG}/FwAssist`
 
 /**
  * Developer-facing and English: linked, never copied.
@@ -74,11 +74,11 @@ export default defineConfig({
           items: [
             { label: 'Start', slug: 'fwassist' },
             github([
-              ['Quellcode', HELFER],
-              ['Releases', `${HELFER}/releases`],
-              ['Changelog', `${HELFER}/blob/main/CHANGELOG.md`],
-              ['Ideen', `${HELFER}/discussions/categories/ideen`],
-              ['Fragen & Antworten', `${HELFER}/discussions`],
+              ['Quellcode', FWASSIST],
+              ['Releases', `${FWASSIST}/releases`],
+              ['Changelog', `${FWASSIST}/blob/main/CHANGELOG.md`],
+              ['Ideen', `${FWASSIST}/discussions/categories/ideen`],
+              ['Fragen & Antworten', `${FWASSIST}/discussions`],
             ]),
           ],
         },

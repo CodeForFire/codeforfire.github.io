@@ -3,7 +3,7 @@
 The CodeForFire website, home of both apps:
 [Lagebuch](https://github.com/CodeForFire/lagebuch) (offline incident
 documentation for the command vehicle, at `/lagebuch/`) and
-[FwAssist](https://github.com/CodeForFire/helfer) (small offline helpers for
+[FwAssist](https://github.com/CodeForFire/FwAssist) (small offline helpers for
 the phone, at `/fwassist/`). The landing page at `/` presents both equally.
 Built with
 [Astro Starlight](https://starlight.astro.build/), deployed to GitHub Pages at
@@ -24,8 +24,8 @@ the app repositories and copied in at build time by `scripts/sync-docs.mjs`:
 | Lagebuch logo, favicon, og:image | `CodeForFire/lagebuch` `docs/logo/` |
 | demo animation | `CodeForFire/lagebuch` `docs/demo/einsatz-flow.gif` |
 | screenshots on `lagebuch/rundgang` | `CodeForFire/lagebuch` `docs/screenshots/` |
-| FwAssist icon | `CodeForFire/helfer` `docs/play/icon-512.png` |
-| screenshots on `fwassist` | `CodeForFire/helfer` `docs/screenshots/` |
+| FwAssist icon | `CodeForFire/FwAssist` `docs/play/icon-512.png` |
+| screenshots on `fwassist` | `CodeForFire/FwAssist` `docs/screenshots/` |
 
 Lagebuch used to live at the root; `astro.config.mjs` redirects the old
 addresses (`/download/`, `/rundgang/`, …) to `/lagebuch/…`.
@@ -48,8 +48,8 @@ Pages → Run workflow*). A change to the Datenschutz page or a fresh
 ## Developing
 
 Needs Node 22.19 or newer (see `.nvmrc`) and checkouts of
-`CodeForFire/lagebuch` and `CodeForFire/helfer`. The sync script looks for
-each in `$LAGEBUCH_PATH` / `$HELFER_PATH`, then `.lagebuch/` / `.helfer/`,
+`CodeForFire/lagebuch` and `CodeForFire/FwAssist`. The sync script looks for
+each in `$LAGEBUCH_PATH` / `$FWASSIST_PATH`, then `.lagebuch/` / `.FwAssist/`,
 `../<name>` and `../../<name>`.
 
 ```bash
