@@ -18,9 +18,11 @@ werden.
 
 :::note[Mehrere Geräte: alle auf dieselbe Version]
 Geräte, die gemeinsam an einem Einsatz arbeiten, müssen dasselbe
-Sync-Protokoll sprechen. Ab Lagebuch 0.8.0 (Sync-Protokoll 7) braucht jedes
-Gerät im gemeinsamen Einsatz 0.8.0 – ELW-Laptop, zweiter Laptop und
-Android-App. Aktualisiert deshalb alle Geräte zusammen, nicht erst im Einsatz.
+Sync-Protokoll sprechen. Lagebuch 0.10.0 hebt es an: Jedes Gerät im
+gemeinsamen Einsatz braucht 0.10.0 – ELW-Laptop, zweiter Laptop und
+Android-App. Ein Gerät mit 0.9 kann sich nicht mehr mit einem Einsatz auf
+0.10.0 verbinden. Aktualisiert deshalb alle Geräte zusammen, nicht erst im
+Einsatz.
 :::
 
 ## Windows: mit winget
@@ -69,7 +71,10 @@ prüfen](#downloads-prüfen) – das ist nachweisbarer als jede Signatur-Warnung
 - **Android** – ab Android 7.0 (API 24); `.apk` öffnen und die Installation
   aus unbekannten Quellen für diese App einmal erlauben. Die Android-App ist
   ein Begleitgerät: sie verbindet sich mit einem Einsatz, der auf einem Laptop
-  gehostet wird.
+  gehostet wird. Ab 0.10.0 ist das `.apk` mit einem festen Schlüssel signiert;
+  eine ältere Lagebuch-App muss deshalb **einmal deinstalliert** werden, bevor
+  sich 0.10.0 installieren lässt. Danach aktualisiert sich jede neue Version
+  über die alte.
 
 ## Downloads prüfen
 
@@ -95,6 +100,15 @@ So lässt sich nachweisen, dass die Datei unverändert aus dem Repository
 stammt – auch solange die Pakete noch nicht signiert sind. Für die
 Kreisbrandinspektion oder den Datenschutzbeauftragten ist das die prüfbare
 Antwort auf „woher kommt diese Datei?“.
+
+## Kartenpakete für die Lagekarte
+
+Die Lagekarte zeichnet ohne Internet – aus einem Kartenpaket pro Landkreis
+(bisher nur in Bayern), das ihr einmal vorher ladet: in Lagebuch **STAMMDATEN → KARTEN**, Landkreis
+wählen, herunterladen. Das Paket bringt Karte, Hydranten, Adressen und
+Geländehöhen mit und bleibt auf dem Gerät. Ladet es zu Hause oder im
+Gerätehaus, nicht erst an der Einsatzstelle. Was dabei wohin geht, steht unter
+[Datenschutz und Sicherheit](/lagebuch/datenschutz/).
 
 ## Systemvoraussetzungen
 
