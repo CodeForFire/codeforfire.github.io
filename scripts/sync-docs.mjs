@@ -1,5 +1,5 @@
 // Copies the user-facing content that lives in the app repositories
-// (CodeForFire/lagebuch and CodeForFire/helfer) into this site. docs/ over
+// (CodeForFire/lagebuch and CodeForFire/FwAssist) into this site. docs/ over
 // there is the single source of truth: nothing this script writes is
 // hand-edited here, and every target is gitignored.
 //
@@ -160,14 +160,14 @@ function describe(repo) {
 }
 
 /** The FwAssist start page: the launcher icon and the phone screenshots. */
-async function syncHelfer(helfer) {
-  const iconSource = join(helfer, 'docs', 'play', 'icon-512.png')
+async function syncFwAssist(fwassist) {
+  const iconSource = join(fwassist, 'docs', 'play', 'icon-512.png')
   await required(iconSource, 'the FwAssist hero icon')
   const iconTarget = join(siteRoot, 'src', 'assets', 'fwassist-icon.png')
   await cp(iconSource, iconTarget)
 
   const shots = await copyScreenshots(
-    join(helfer, 'docs', 'screenshots'),
+    join(fwassist, 'docs', 'screenshots'),
     join(siteRoot, 'src', 'assets', 'fwassist', 'screenshots'),
   )
   return [iconTarget, ...shots]
@@ -175,11 +175,11 @@ async function syncHelfer(helfer) {
 
 const lagebuch = findRepo('lagebuch', 'LAGEBUCH_PATH')
 console.log(`sync-docs: reading Lagebuch from ${lagebuch} @ ${describe(lagebuch)}`)
-const helfer = findRepo('helfer', 'HELFER_PATH')
-console.log(`sync-docs: reading FwAssist from ${helfer} @ ${describe(helfer)}`)
+const fwassist = findRepo('FwAssist', 'FWASSIST_PATH')
+console.log(`sync-docs: reading FwAssist from ${fwassist} @ ${describe(fwassist)}`)
 const written = [
   await syncDatenschutz(lagebuch),
   ...(await syncLagebuchImages(lagebuch)),
-  ...(await syncHelfer(helfer)),
+  ...(await syncFwAssist(fwassist)),
 ]
 console.log(`sync-docs: wrote ${written.length} files`)

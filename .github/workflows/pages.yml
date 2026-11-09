@@ -5,7 +5,7 @@ on:
     branches: [main]
   pull_request:
   # The site's content partly lives in CodeForFire/lagebuch and
-  # CodeForFire/helfer. An automatic
+  # CodeForFire/FwAssist. An automatic
   # cross-repo trigger would need a token with write access to this repo, so
   # instead the site rebuilds nightly and on demand.
   schedule:
@@ -38,11 +38,11 @@ jobs:
           persist-credentials: false
 
       # docs/ from the FwAssist repo: the launcher icon and the screenshots.
-      - name: Check out CodeForFire/helfer (docs only)
+      - name: Check out CodeForFire/FwAssist (docs only)
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          repository: CodeForFire/helfer
-          path: .helfer
+          repository: CodeForFire/FwAssist
+          path: .FwAssist
           sparse-checkout: docs
           persist-credentials: false
 
