@@ -73,6 +73,7 @@ export default defineConfig({
           label: 'FwAssist',
           items: [
             { label: 'Start', slug: 'fwassist' },
+            { label: 'Datenschutzerklärung', slug: 'fwassist/datenschutz' },
             github([
               ['Quellcode', FWASSIST],
               ['Releases', `${FWASSIST}/releases`],
