@@ -1,6 +1,6 @@
 ---
 title: 'Datenschutzerklärung'
-description: 'Welche Daten FwAssist verarbeitet: keine personenbezogenen. Kein Konto, kein Netzzugriff, keine Berechtigungen — die Seite für den Play Store und für Datenschutzbeauftragte.'
+description: 'Welche Daten FwAssist verarbeitet und speichert: keine personenbezogenen Daten werden gespeichert. Kein Konto, kein Netzzugriff, keine Berechtigungen — die Seite für den Play Store und für Datenschutzbeauftragte.'
 ---
 Diese Seite beschreibt, welche Daten die Android-App FwAssist verarbeitet. Sie
 gilt für die App aus dem Google Play Store und für die APK von GitHub
@@ -11,8 +11,10 @@ ausdrücklich **keine Rechtsberatung**.
 
 ## Kurzfassung
 
-- **Keine personenbezogenen Daten.** FwAssist fragt weder Namen noch
-  Telefonnummern, Standort oder Kontakte ab und speichert nichts davon.
+- **Keine personenbezogenen Daten gespeichert.** FwAssist fragt weder Namen
+  noch Telefonnummern, Standort oder Kontakte ab. Was im Buchstabieralphabet
+  eingetippt wird — das kann auch ein Name sein —, verarbeitet die App nur im
+  Arbeitsspeicher, um es zu buchstabieren; gespeichert wird es nicht.
 - **Kein Konto, keine Anmeldung, kein Server.** CodeForFire betreibt keinen
   Dienst, an den etwas fließen könnte, und erhält keinerlei Daten.
 - **Kein Netzzugriff.** Die App fordert keine einzige Android-Berechtigung an,
@@ -35,7 +37,8 @@ App ein paar Einstellungen im privaten Speicher der App auf dem Handy:
 
 Nichts davon bezieht sich auf eine Person. Das Wort, das im
 Buchstabieralphabet eingegeben wird, und die Zeit der Stoppuhr werden nicht
-gespeichert.
+gespeichert: Sie liegen nur im Arbeitsspeicher und sind fort, sobald Android
+die App beendet.
 
 Andere Apps können diesen Speicher nicht lesen. Beim Deinstallieren löscht
 Android ihn vollständig; dasselbe bewirkt *Einstellungen → Apps → FwAssist →
