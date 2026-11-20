@@ -23,12 +23,26 @@ import { Card, CardGrid } from '@astrojs/starlight/components'
 
 Lagebuch ist das digitale Einsatztagebuch für den Einsatzleitwagen: eine
 Desktop-Anwendung, die auch ohne Netz, ohne Cloud und ohne Abo funktioniert.
-Ein Einsatz ist eine Datei auf dem ELW-Laptop – mit Einsatztagebuch, Kräften,
-Atemschutzüberwachung, Aufgaben, CO-Messprotokoll und PDF-Bericht.
+Ein Einsatz ist eine Datei auf dem ELW-Laptop – mit Einsatztagebuch,
+Führungsorganisation, Lagekarte, Kräften, Atemschutzüberwachung, Aufgaben,
+Gasmessprotokoll und PDF-Bericht.
+
+:::note[Neu in Lagebuch 0.10.0]
+Die Führung bekommt ihren eigenen Platz: eine **Führungstafel** wie der
+A3-Bogen, mit Abschnitten, Bereitstellung, Funkgruppen und Einheiten zum
+Ziehen, und eine **Lagekarte**, die ohne Internet aus Kartenpaketen je
+Landkreis zeichnet – mit taktischen Zeichen, Hydranten und Gelände. Dazu die
+**Lagemeldung** an die ILS mit Buchstabier-Helfer, die **Ausgabeliste** für
+Mobilteile und Westen und ein **Gasmessprotokoll** für bis zu acht Gase. Alles
+Weitere steht im
+[Changelog](https://github.com/CodeForFire/lagebuch/blob/v0.10.0/CHANGELOG.md).
+Geräte, die einen Einsatz teilen, brauchen alle 0.10.0 – siehe
+[Herunterladen](/lagebuch/download/).
+:::
 
 <img
   src="/bilder/einsatz-flow.gif"
-  alt="Ein Einsatz in Lagebuch: Einsatzdaten, ETB, Kräfte, Kontakte, Atemschutz, Aufgaben, CO-Messung, Beteiligte, PDF"
+  alt="Ein Einsatz in Lagebuch: Einsatzdaten, ETB, Lagemeldung, Führung, Lagekarte, Kräfte, Kontakte, Atemschutz, Aufgaben, Gasmessung, Beteiligte, Ausgabe, PDF"
   style="width: 100%; border-radius: 0.5rem; margin: 2rem 0 0.75rem;"
 />
 
@@ -69,18 +83,22 @@ Jede Ansicht im Detail, mit Erklärungen zu jedem Element: der
 
 | Modul | Was es tut |
 |---|---|
-| **Einsatzdaten** | Stichwort, bayerische Einsatznummer (`B 1.2 JJMMTT lfd.Nr.`) und Adresse – nachtragbar, sobald die ILS zurückruft |
-| **ETB** | Einsatztagebuch mit Richtung (Eingang/Ausgang/intern), automatischen Systemeinträgen und nachträglicher Korrektur mit Historie |
-| **Kräfte** | Fahrzeuge aus den Stammdaten, Stärke als ZF/GF/Mann, AGT-Zahl, Status und Bemerkung; Gesamtstärke immer im Blick |
-| **Kontakte** | Das Telefonbuch der Einsatzgruppe aus den Stammdaten: Name, Rolle, Funkrufname, Zuständigkeit und Nummer zum Anklicken – mit Suche über alle Felder |
-| **Aufgaben** | Aufträge mit Wichtigkeit, Dringlichkeit, Zuständigem und Timer – mit Sprachansage, wenn sie fällig werden; direkt aus einem ETB-Eintrag anlegbar, nachträglich korrigierbar und mit +5 MIN aufschiebbar |
-| **Funktionen** | EL, Abschnittsleiter und weitere Rollen mit von/bis, Übergabe und Handynummer |
-| **Atemschutzüberwachung** | Trupps mit Einstiegsdruck, Einsatzzeit-Countdown, Druckabfrage-Intervall, Rückzugsdruck und Rückzugsalarm – mit Sprachansage und Sirene; Sicherheitstrupp je Trupp zugeordnet und im ETB protokolliert; Druck per Tastatur erfasst, unplausible Sprünge werden nachgefragt |
+| **Einsatzdaten** | Stichwort aus euren Stammdaten, Einsatznummer im Format der Leitstelle (in Bayern `B 1.2 JJMMTT lfd.Nr.`, Datum und Buchstabe vorbefüllt) und Adresse mit Hausnummer, PLZ und Ort – eine Straße aus den Stammdaten füllt den Rest aus; nachtragbar, sobald die ILS zurückruft |
+| **ETB** | Einsatztagebuch mit Von, An und Zeitstempel, automatischen Systemeinträgen und nachträglicher Korrektur mit Historie; Textbausteine aus den Stammdaten per `::kürzel` |
+| **Lagemeldung** | Zweiter Reiter im ETB (Strg+L): Meldender, Einsatzstelle, Lage, Maßnahmen, Einheiten und Nachforderungen – vorbefüllt aus dem Einsatz, als Funkspruch zum Vorlesen; SENDEN schreibt sie als „LM n“ ins ETB, startet die Rückmeldung an die ILS neu und nimmt sie in den PDF-Bericht. Dazu ein Buchstabier-Helfer (Anton/Berta, DIN 5009, NATO) |
+| **Führung** | Die Führungsorganisation als Tafel wie auf dem A3-Bogen: Einsatzleitung, Abschnitte und Unterabschnitte, Bereitstellung und die Einsatzleitungen der Partner, jeweils mit Leiter, Melder, Führungsfahrzeug, bis zu drei TMO- und DMO-Funkgruppen und ihren Einheiten samt Stärke. Einheiten und Abschnitte werden gezogen, Strg+Z nimmt es zurück; die Tafel prüft, ob jede Stelle eine Funkgruppe mit der übergeordneten teilt, und der Bericht druckt, wer wem unterstellt ist |
+| **Lagekarte** | Offline-Karte aus Kartenpaketen je Landkreis: Einsatzstelle aus der Adresse oder per Tippen, Fahrzeuge als taktische Zeichen nach DV 102, Hydranten und andere Wasserentnahmestellen aus OpenStreetMap mit Durchfluss, Gelände aus dem DGM5 mit Fließweg und Höhenprofil, GeoJSON-Ebenen wie eine DWD-Ausbreitungsprognose, Wetter auf Abruf und eine Nachtkarte – auf jedem verbundenen Gerät dieselbe |
+| **Kräfte** | Fahrzeuge aus den Stammdaten mit Fahrzeugtyp und Abschnitt, Stärke als ZF/GF/Mann, AGT-Zahl, Status und Bemerkung; Gesamtstärke immer im Blick |
+| **Funktionen** | EL, EAL, Melder und weitere Rollen mit Abschnitt, von/bis, Übergabe und Handynummer – korrigierbar ohne Übergabe und einzeln beendbar; jede Rolle in den Stammdaten als einmal je Einsatz, einmal je Abschnitt oder beliebig oft einrichtbar |
+| **Kontakte** | Das Telefonbuch der Einsatzgruppe aus den Stammdaten: Name, Rolle, Funkrufname, Zuständigkeit, Nummer zum Anklicken und E-Mail – dazu Fahrzeuge mit Telefon oder Mail, mit Suche über alle Felder |
+| **Aufgaben** | Aufträge mit Wichtigkeit, Dringlichkeit, Zuständigem und Timer – mit Sprachansage, wenn sie fällig werden; direkt aus einem ETB-Eintrag anlegbar und mit ihm verknüpft, nachträglich korrigierbar und mit +5 MIN aufschiebbar |
+| **Atemschutzüberwachung** | Trupps nach Funkrufname und Trupp-Art, mit Einstiegsdruck, Einsatzzeit-Countdown, Druckabfrage-Intervall, Rückzugsdruck und Rückzugsalarm – mit Sprachansage und Sirene; Sicherheitstrupp je Trupp zugeordnet und im ETB protokolliert; Druck und Standort des Trupps per Tastatur erfasst, unplausible Sprünge werden nachgefragt |
 | **Rückmeldung an ILS** | Erinnerung nach konfigurierbarer Zeit, danach im Intervall, mit ERLEDIGT-Quittierung; überlebt Neustart und Absturz |
-| **CO-Messprotokoll** | Haus, Stockwerk, Wohnung: Status (offen / durchsucht / betroffen), Messreihe je Wohnung mit Uhrzeit und ppm-Wert in Gefahrenfarbe, Bewohnername, Schlüssel vorhanden – wie die Türmarkierung vor Ort; der Verlauf steht im ETB und im PDF |
-| **Beteiligte** | Eine Karte pro Person an diesem Einsatz: Name, Telefon und Notiz – direkt in der Karte korrigierbar, festgehalten für den Bericht |
+| **Gasmessprotokoll** | Haus, Stockwerk, Wohnung: Status (offen / durchsucht / betroffen), bis zu acht Gase aus den Stammdaten (CO, CO₂, H₂S, CH₄, O₂ …) mit eigener Einheit und eigenen Grenzwerten, Messreihe je Wohnung mit Uhrzeit und Wert in Gefahrenfarbe, Bewohnername, Schlüssel und Schlüsselnummer – wie die Türmarkierung vor Ort; Gebäude aus den Stammdaten-Objekten, der Verlauf steht im ETB und im PDF |
+| **Beteiligte** | Eine Karte pro Person an diesem Einsatz: Name, Telefon, Notiz, Aufenthaltsort nach einer Räumung und Wohnung aus dem Gasmessprotokoll – mit Suche, direkt in der Karte korrigierbar, festgehalten für den Bericht |
+| **Ausgabeliste** | Ausgegebene Geräte (Mobilteil, Westen, AED …) aus den Stammdaten: an wen, Telefon, Organisation, mit Uhrzeit; Rückgabe mit einem Klick – was noch draußen ist, steht oben, und „Einsatz abschließen“ warnt davor; im PDF |
 | **Checklisten** | Beliebig viele eigene Checklisten aus den Stammdaten – benannt, in frei wählbarer Reihenfolge in der Seitenleiste, Pflichtpunkte markiert, Abschluss im ETB protokolliert |
-| **Dateien & Links** | Fotos und PDFs an den Einsatz hängen (landen im Bericht); Schnellzugriff auf Wetter, Karten, Hydrantenplan |
+| **Dateien & Links** | Fotos und PDFs an den Einsatz hängen, auch per Strg+V aus der Zwischenablage – sie liegen in der Einsatzdatei und landen im Bericht; Schnellzugriff auf Wetter, Karten, Hydrantenplan |
 | **PDF-Bericht** | Ein Klick, Abschnitte wählbar, Anhänge eingebettet – fertig für Akte und Kreisbrandinspektion |
 | **Mehrere Geräte** | Einsatz auf dem ELW-Laptop hosten, mit Tablet oder zweitem Laptop im LAN mitschreiben; Android-App als Begleitgerät |
 
@@ -92,9 +110,11 @@ Die wichtigsten:
 
 | Taste | Wirkung |
 |---|---|
-| **Strg+1** … **Strg+0** | Modul öffnen – fest je Modul, egal wie die Seitenleiste sortiert ist (Strg+1 ETB, Strg+4 Kräfte, Strg+6 Atemschutz) |
+| **Strg+1** … **Strg+0** | Eintrag der Seitenleiste öffnen, von oben gezählt – auch Checklisten; die Ziffer steht am Eintrag |
 | **Strg+Tab** / **Strg+Umschalt+Tab** | nächstes / vorheriges Modul der Seitenleiste, auch Checklisten |
 | **Strg+N** | neuer ETB-Eintrag, Cursor im Feld VON |
+| **Strg+L** | Lagemeldung öffnen |
+| **Strg+Z** | auf der Führungstafel: letztes Verschieben rückgängig |
 | **F9** | zur dringendsten Meldung: Rückzugsalarm, dann Druckabfrage, fällige Aufgabe, Rückmeldung an die ILS |
 
 Die Kürzel stehen auch in der Seitenleiste und an der Meldung, zu der F9

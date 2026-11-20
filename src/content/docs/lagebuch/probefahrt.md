@@ -25,7 +25,8 @@ installieren](/lagebuch/download/).
 
 In Lagebuch **STAMMDATEN → IMPORTIEREN** wählen, die Datei öffnen,
 **SPEICHERN**. Jetzt kennen die Dropdowns zwei Wachen, sieben Fahrzeuge, ein
-paar Namen, Checklisten und Links.
+paar Namen, Funkgruppen, Stichwörter, Straßen, Geräte für die Ausgabeliste,
+Textbausteine, Checklisten und Links.
 
 ## 3. Übungseinsatz öffnen
 
@@ -33,7 +34,7 @@ paar Namen, Checklisten und Links.
 
 In Lagebuch **ÖFFNEN** wählen. Der Einsatz „B 3 – Zimmerbrand“ hat schon
 ETB-Einträge, vier Fahrzeuge, einen Angriffstrupp unter Atemschutz mit
-zugeordnetem Sicherheitstrupp, Aufgaben und ein CO-Messprotokoll, in dem eine
+zugeordnetem Sicherheitstrupp, Aufgaben und ein Gasmessprotokoll, in dem eine
 Wohnung schon dreimal gemessen wurde. Über **WEITER BEARBEITEN** könnt ihr selbst eingreifen.
 
 ## 4. Ausprobieren
@@ -42,8 +43,16 @@ Wohnung schon dreimal gemessen wurde. Über **WEITER BEARBEITEN** könnt ihr sel
 - Im Tab **ATEMSCHUTZ** einen Trupp bereitstellen, einen Sicherheitstrupp
   zuordnen und starten – und warten, bis die Druckabfrage sich meldet.
 - Eine Aufgabe mit Timer anlegen.
-- In der **CO-MESSUNG** eine Wohnung markieren oder einen weiteren Messwert
+- In der **GASMESSUNG** eine Wohnung markieren oder einen weiteren Messwert
   eintragen – der Verlauf landet im ETB.
+- Unter **FÜHRUNG → ORGANISATION** einen Abschnitt anlegen und ein Fahrzeug
+  hineinziehen.
+- Im ETB den Reiter **LAGEMELDUNG** öffnen (Strg+L) und die nächste
+  Lagemeldung an die ILS entwerfen.
+- Unter **AUSGABE** ein Mobilteil an die Polizei ausgeben.
+- Wer die Lagekarte sehen will, lädt unter **STAMMDATEN → KARTEN** das
+  [Kartenpaket](/lagebuch/download/#kartenpakete-für-die-lagekarte) eines
+  bayerischen Landkreises und öffnet **FÜHRUNG → LAGEKARTE**.
 
 ## 5. PDF exportieren
 

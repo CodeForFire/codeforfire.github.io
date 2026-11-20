@@ -13,7 +13,7 @@ Alle Angaben laut Herstellerseiten, Stand September 2026. Fehler oder
 | Daten bleiben im ELW, kein Cloud-Konto | ja, eine Datei pro Einsatz | ja | nein, „cloudbasierte Lösung“ mit Portal-Benutzerkonto ([Quelle](https://fireboard.net/)) | nein, Cloud mit Servern in Deutschland ([Quelle](https://www.missionbuddies.de/faq/)) | k. A. |
 | Mehrere Geräte im Einsatz | ja, im LAN, TLS-gepinnt, ohne Server | nein | ja, über Portal ([Quelle](https://fireboard.net/produkte/module/grundsystem/)) | ja; gratis auf 2 Geräten, Premium unbegrenzt ([Quelle](https://www.missionbuddies.de/atemschutzueberwachung/)) | ja, live nur mit Internet ([Quelle](https://www.fireplan.de/elw)) |
 | Atemschutzüberwachung | ja, mit Sprachansage, Rückzugsalarm und Sicherheitstrupp | Überwachungstafel | ja, laut Produktseite ([Quelle](https://fireboard.net/)) | ja, Gratis-Stufe ([Quelle](https://www.missionbuddies.de/atemschutzueberwachung/)) | k. A. |
-| CO-Messprotokoll | ja, Messreihe je Wohnung | Zettel | k. A. | k. A. | k. A. |
+| Gasmessprotokoll | ja, Messreihe je Wohnung, bis zu acht Gase | Zettel | k. A. | k. A. | k. A. |
 | PDF-Einsatzbericht | ja, Abschnitte wählbar | nein | ja ([Quelle](https://fireboard.net/produkte/module/grundsystem/)) | ja, modulweise Export ([Quelle](https://www.missionbuddies.de/faq/)) | k. A. |
 | Kosten | 0 €, MIT-Lizenz | Papier | Grundsystem kostenfrei; Module wie Einsatzführung einmalig 600 € zzgl. 90 €/Jahr Wartung ([Preisliste 02/2026](https://fireboard.net/wp-content/uploads/2026/02/Fireboard-Preisliste-gesamt-Feb2026.pdf)) | Gratis-Stufe, sonst Abo ([Quelle](https://www.missionbuddies.de/faq/)) | auf Anfrage |
 | Quellcode einsehbar | ja | – | nein | nein | nein |
